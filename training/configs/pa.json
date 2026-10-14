@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "template",
+  "model_profile": "pa",
+  "dataset": {
+    "root": null,
+    "split_manifest": null,
+    "split_sha256": null,
+    "class_reference": "cxas/data/anychest_reference.json"
+  },
+  "output_dir": null,
+  "training": {
+    "seed": 42,
+    "fold": 4,
+    "epochs": 200,
+    "lr": 0.0001,
+    "batch_size": 8,
+    "accumulation_steps": 1,
+    "gpus": "0",
+    "selected_views": [
+      "PA"
+    ],
+    "angle_encoding_type": "sin_cos",
+    "progressive_training_resolutions": [
+      512
+    ],
+    "augmentation_profile": "full",
+    "use_variations": true,
+    "resume_training": false,
+    "further_training": false,
+    "reset_augmentation_seeds": false
+  },
+  "car": {
+    "start_epoch": 100,
+    "dist_weight": 4.0,
+    "recon_weight": 2.0
+  },
+  "initial_checkpoint": null,
+  "notes": [
+    "Hyperparameters are a starting template from the retained shared config, not a verified recipe for the released weights.",
+    "Fixed split integration and dataset provenance must be completed before an executable training release."
+  ]
+}
