@@ -1,0 +1,21 @@
+AnyCXR lab repository
+
+The inference package, examples and scripts were imported from
+https://github.com/Agaresd47/AnyCXR at commit
+6abbb08007034e1f2e13472324f8d7afdb62a0ca.
+
+Copyright (c) 2025 Zifei Dong
+The original MIT license is preserved in LICENSES/AnyCXR-inference-MIT.txt.
+The lab repository's pre-existing Apache-2.0 LICENSE is also retained.
+Legacy package metadata contains a non-commercial declaration; this import
+does not resolve the inherited license discrepancy or change checkpoint terms.
+
+Modified during the 2026-10-14 lab migration:
+- README.md: lab presentation and usage documentation.
+- pyproject.toml: include seg.py in the installed distribution so the
+  existing anychest-infer entry point can be imported.
+- setup.cfg: package the retained license files.
+- .gitignore: exclude local weights and generated outputs.
+
+The README figures use existing AnyCXR synthetic example inputs and outputs.
+The wordmark and method diagram were created for the lab README.
