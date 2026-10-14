@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "anychest-public"
 version = "0.1.0"
-description = "Inference-only public package for AnyChest anatomical segmentation."
+description = "AnyCXR anatomical segmentation inference package."
 readme = "README.md"
 authors = [
   { name="Anonymous Authors" },
@@ -36,6 +36,9 @@ dependencies = [
 
 [project.scripts]
 anychest-infer = "seg:main"
+
+[project.optional-dependencies]
+train = ["PyYAML", "scikit-learn", "scipy"]
 
 [tool.setuptools]
 py-modules = ["seg"]

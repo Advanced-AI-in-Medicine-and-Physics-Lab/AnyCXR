@@ -1,0 +1,11 @@
+{
+  "release_id": null,
+  "code_commit": null,
+  "training_config_sha256": null,
+  "dataset_version": null,
+  "frozen_split_sha256": null,
+  "class_reference_sha256": null,
+  "checkpoint_registry": "checkpoints/registry.json",
+  "license": null,
+  "validation_receipt": null
+}

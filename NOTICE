@@ -19,3 +19,14 @@ Modified during the 2026-10-14 lab migration:
 
 The README figures use existing AnyCXR synthetic example inputs and outputs.
 The wordmark and method diagram were created for the lab README.
+
+Training preparation import:
+- training/legacy/ retains 16 files from the original AnyCXR training
+  engineering source at daee4030227a3ffe5b298f3a564550951f6a225f.
+- The imported files were identical in the retained ARES and EROS snapshots.
+- Its original CC BY-NC-SA 4.0 license is retained as
+  training/legacy/LICENSE.txt. Per-file hashes are in
+  training/source_manifest.json.
+- The public inference implementation was not replaced by that legacy code.
+- training/configs/, checkpoint registry and HF model cards are preparation
+  templates; no new checkpoints are represented as available.

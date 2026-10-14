@@ -15,6 +15,7 @@
   <a href="#installation"><img src="https://img.shields.io/badge/Get_started-Installation-336c91?style=flat-square" alt="Installation"></a>
   <a href="#quick-start"><img src="https://img.shields.io/badge/CLI-Quick_start-336c91?style=flat-square" alt="CLI quick start"></a>
   <a href="#anatomical-structures"><img src="https://img.shields.io/badge/Anatomy-54_structures-7752a4?style=flat-square" alt="54 anatomical structures"></a>
+  <a href="#training"><img src="https://img.shields.io/badge/Training-Preparation-7752a4?style=flat-square" alt="Training preparation"></a>
 </p>
 <p align="center">
   <img src="docs/assets/anycxr-examples.png" alt="Bundled synthetic PA, lateral and 45-degree oblique images with existing AnyCXR segmentation overlays" width="100%">
@@ -22,9 +23,9 @@
 
 **AnyCXR** learns chest X-ray anatomy from CT-derived synthetic radiographs and partial anatomical labels. Multi-stage Domain Randomization (MSDR) varies projection geometry and image appearance, while Conditional Joint Annotation Regularization (CAR) models joint anatomy under incomplete supervision. The inference package exports 54 anatomical channels as masks and color overlays.
 
-This is the **primary lab repository** for AnyCXR. The current public release includes the inference package, example inputs and outputs, Docker support, and evaluation scripts. Training integration and new model releases are planned; see the [roadmap](#roadmap).
+This is the **primary lab repository** for AnyCXR. The current inference release includes the package, example inputs and outputs, Docker support, and evaluation scripts. The repository also contains [training source and configuration templates](training/README.md), plus [full/inference checkpoint placeholders](checkpoints/README.md) for the next release. Executable training integration and new weights are still in preparation.
 
-[Installation](#installation) · [Quick start](#quick-start) · [Model weights](#model-weights) · [Structures](#anatomical-structures) · [Method](#method) · [Evaluation](#evaluation) · [Citation](#citation)
+[Installation](#installation) · [Quick start](#quick-start) · [Model weights](#model-weights) · [Structures](#anatomical-structures) · [Method](#method) · [Training](#training) · [Evaluation](#evaluation) · [Citation](#citation)
 
 ## Installation
 
@@ -66,7 +67,18 @@ The bundle contains **three model checkpoints**: PA, lateral and oblique. Six an
 
 Use `--profile oblique` for a dataset-style directory with view-specific subfolders. For a single image or a flat folder, choose an angle-specific profile. The release does not provide a separate AP checkpoint or continuous angle estimation.
 
-This bundle is **inference-only**: optimizer and scheduler states were removed. Full training checkpoints will be released separately in a later update.
+This bundle is **inference-only**: optimizer and scheduler states were removed.
+
+### Next release: full and inference-only checkpoints
+
+| Model | Full training checkpoints | Inference-only checkpoint | Availability |
+| --- | --- | --- | --- |
+| PA | Latest, best without CAR, best with CAR | PA weights | **Placeholder** |
+| Lateral | Latest, best without CAR, best with CAR | Lateral weights | **Placeholder** |
+| Oblique | Latest, best without CAR, best with CAR | Shared oblique weights | **Placeholder** |
+| Combined | — | PA + lateral + oblique bundle | **Placeholder** |
+
+The [checkpoint registry](checkpoints/README.md) reserves **13 future artifacts**. Full checkpoints and slim inference weights will be prepared as two HF release types, with [model-card templates](hf/README.md) already in the repository. New HF repository names and weights are unassigned; the entries above are not download links and do not replace the existing bundle.
 
 ## Quick start
 
@@ -199,6 +211,16 @@ DEVICE=cpu bash scripts/build_example_cases.sh
 
 The top-of-page montage is assembled from those existing example files. No additional inference or training was used to create the montage.
 
+## Training
+
+The [training directory](training/README.md) includes the retained AnyCXR U-Net/CAR trainer and PA, lateral and oblique configuration templates. Inspect the preparation plan without loading models or accessing image data:
+
+```bash
+python training/train.py --config training/configs/pa.json --dry-run
+```
+
+This reports the unfilled data/split/output fields and reserved checkpoint slots. **Training is not yet enabled through this entry point.** Fixed split integration, actual data/configuration provenance and training-to-inference checkpoint compatibility remain pending. Optional dependencies for the retained source are available with `python -m pip install -e '.[train]'`.
+
 ## Evaluation
 
 For a separately obtained Dataset003-style test set with reference masks:
@@ -215,7 +237,9 @@ The script evaluates PA, lateral and oblique profiles and writes `per_image_dice
 ## Roadmap
 
 - [x] Lab repository with the existing public inference package, examples and usage documentation.
-- [ ] Integrate the training and inference workflows into a reproducible repository.
+- [x] Retain the AnyCXR training source and PA/lateral/oblique configuration templates.
+- [x] Reserve paired full/inference checkpoint slots and prepare two HF model cards.
+- [ ] Complete executable training integration with a frozen split and verified export compatibility.
 - [ ] Update the model and weights after the next checkpoint is supplied.
 - [ ] Publish full training checkpoints and a separate inference-only bundle on Hugging Face.
 - [ ] Prepare the FLUX and BAAI data workflow and evaluate retraining under a defined protocol.
@@ -232,5 +256,7 @@ Publication metadata and a BibTeX entry will be added when available.
 ## License and acknowledgments
 
 The lab repository's existing [Apache-2.0 license](LICENSE) is retained. The imported inference source retains its original [MIT copyright and license notice](LICENSES/AnyCXR-inference-MIT.txt); its package metadata also contains a legacy non-commercial declaration. These inherited declarations have not been reconciled in this migration. Checkpoint terms are maintained with the [Hugging Face model release](https://huggingface.co/agaresd/anychest-inference).
+
+The separately imported training source retains its original [CC BY-NC-SA 4.0 license](training/legacy/LICENSE.txt). Future checkpoint terms remain to be established for the new release.
 
 The initial inference release was maintained at [Agaresd47/AnyCXR](https://github.com/Agaresd47/AnyCXR). README organization and presentation were inspired by [TotalSegmentator](https://github.com/wasserth/TotalSegmentator) and [FleXray](https://flexray.csail.mit.edu/); all displayed segmentation examples are from AnyCXR.

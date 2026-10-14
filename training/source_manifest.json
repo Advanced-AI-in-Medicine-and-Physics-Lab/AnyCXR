@@ -1,0 +1,102 @@
+{
+  "source_commit": "daee4030227a3ffe5b298f3a564550951f6a225f",
+  "scope": "AnyCXR U-Net/CAR trainer dependency closure; no baseline vendors, notebooks, data or runtime configuration",
+  "source_files": [
+    {
+      "source_path": "LICENSE.txt",
+      "destination_path": "training/legacy/LICENSE.txt",
+      "sha256": "8529d8cd7747e8bf310a7950d189cd2ebfe771d32f8d1e988649b98cde404949",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/__init__.py",
+      "destination_path": "training/legacy/cxas/__init__.py",
+      "sha256": "1157d1d579b6505a6c4ed4e1e4b1ce125732844a42c4ba9455550ad769fe32df",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/augmentation.py",
+      "destination_path": "training/legacy/cxas/augmentation.py",
+      "sha256": "b036433be6d5383e09ac06914493050ade216ac98c6a71232fbf91516e45bff3",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/dataset.py",
+      "destination_path": "training/legacy/cxas/dataset.py",
+      "sha256": "7f57a2f926eb535f3a6e1d46590c27874bbe5043190b75d2e4302f1fa85f6319",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/losses/compound_losses.py",
+      "destination_path": "training/legacy/cxas/losses/compound_losses.py",
+      "sha256": "e0d37af50f68d165216101a3b0a982ff3ae0489ea0b98112ca292d3c06df7c22",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/models/UNet/attention_modules.py",
+      "destination_path": "training/legacy/cxas/models/UNet/attention_modules.py",
+      "sha256": "b5c2334f97f10833eac9c0204a41621d9d3e1e2397b6f0b6c49fa69a594bae63",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/models/UNet/backbone_adapters.py",
+      "destination_path": "training/legacy/cxas/models/UNet/backbone_adapters.py",
+      "sha256": "e2366aebc1e6a3d4f6801e50612595258f1ad7ca65ee24e33bb2afadbfac2dbe",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/models/UNet/decoder.py",
+      "destination_path": "training/legacy/cxas/models/UNet/decoder.py",
+      "sha256": "1bd4eadb91be644fda4f7b9d5c3d269ef1f37b6a9f6d12bf54c9c11ec3886686",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/models/UNet/encoder.py",
+      "destination_path": "training/legacy/cxas/models/UNet/encoder.py",
+      "sha256": "486fb3154385081093731aefb6ab39639f14b1b797e745fabb0dcd14d763f85e",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/models/UNet/jtr_modules.py",
+      "destination_path": "training/legacy/cxas/models/UNet/jtr_modules.py",
+      "sha256": "079ee489018cdd52757481a3646363c473873d12d11e5e0e78d600dede5f7dd2",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/models/UNet/unet_blocks.py",
+      "destination_path": "training/legacy/cxas/models/UNet/unet_blocks.py",
+      "sha256": "addc5c5128cb14320ad3a5753a1f8e206051ef0e562ee27cc820cfd322e744f1",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/models/UNet/unet_model.py",
+      "destination_path": "training/legacy/cxas/models/UNet/unet_model.py",
+      "sha256": "b9e160dd9fcf00e56de096e868e0f18c8a86ed2b73b6a1a582f619f9c0685029",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/models/__init__.py",
+      "destination_path": "training/legacy/cxas/models/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "cxas/trainer.py",
+      "destination_path": "training/legacy/cxas/trainer.py",
+      "sha256": "690bd37f112e4c5638f68e8c653f0263604ee683e1986e1ffacefd7fdeeba776",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "shared_training_config.py",
+      "destination_path": "training/legacy/shared_training_config.py",
+      "sha256": "afe3a05f5cef7e4b1cd1cdad4a89dbb59d02daffcdd463e03e88ac849ec0c681",
+      "ares_eros_identical": true
+    },
+    {
+      "source_path": "train_anycxr.py",
+      "destination_path": "training/legacy/train_anycxr.py",
+      "sha256": "7aa0448d0bafb11ae926f3f19d2018975d802646538350a9dbebc909589732bf",
+      "ares_eros_identical": true
+    }
+  ]
+}

@@ -210,3 +210,6 @@ __marimo__/
 /weights/
 /outputs/
 /repro_outputs/
+/training/runs/
+/checkpoints/artifacts/
+/hf/staging/
