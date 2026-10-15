@@ -39,6 +39,7 @@ anychest-infer = "seg:main"
 
 [project.optional-dependencies]
 train = ["PyYAML", "scikit-learn", "scipy"]
+frontal = ["transformers==4.56.2", "scipy"]
 
 [tool.setuptools]
 py-modules = ["seg"]

@@ -39,3 +39,7 @@ python scripts/check_checkpoint_registry.py --require-ready
 ```
 
 The first command validates the preparation structure. The second intentionally fails while placeholders remain. Neither command downloads or uploads weights. HF account/repository names and publication are deferred; see [HF preparation](../hf/README.md).
+
+## Experimental frontal pair
+
+`registry.json` separately reserves frontal `last.pt`, `best.pt` and `inference.pt`. This route uses AP/PA ConvNeXtV2/CAS-lite/AMFS, with 384-pixel inputs and 96-grid outputs. Full and inference artifacts are produced together by [the frontal runner](../training/frontal/README.md); completion, review and publication remain separate. These slots do not imply a download, a selected winner or replacement of the existing ResNet50 bundle.

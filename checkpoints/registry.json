@@ -232,5 +232,46 @@
       "epoch": null,
       "metrics": null
     }
-  ]
+  ],
+  "experimental_frontal": {
+    "status": "unpublished_development",
+    "model_family": "convnextv2_anycxr_anychest_cas_lite_amfs1_jtr0",
+    "supported_views": [
+      "AP",
+      "PA"
+    ],
+    "input_size": 384,
+    "output_size": 96,
+    "documentation": "training/frontal/README.md",
+    "promotion": "none; released legacy bundle remains the default",
+    "artifacts": [
+      {
+        "id": "frontal_full_last",
+        "kind": "full",
+        "filename": "frontal/last.pt",
+        "status": "pending_training_completion",
+        "hf_repo_id": null,
+        "hf_revision": null,
+        "sha256": null
+      },
+      {
+        "id": "frontal_full_best",
+        "kind": "full",
+        "filename": "frontal/best.pt",
+        "status": "pending_training_completion",
+        "hf_repo_id": null,
+        "hf_revision": null,
+        "sha256": null
+      },
+      {
+        "id": "frontal_inference",
+        "kind": "inference",
+        "filename": "frontal/inference.pt",
+        "status": "pending_training_completion_and_review",
+        "hf_repo_id": null,
+        "hf_revision": null,
+        "sha256": null
+      }
+    ]
+  }
 }
