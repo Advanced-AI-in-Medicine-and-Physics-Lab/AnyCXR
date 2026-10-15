@@ -1,0 +1,11 @@
+{
+  "integration_date": "2026-10-15",
+  "source_project": "xray_heart_disease_classification",
+  "source_files": {
+    "segmentation/anychest_v3/model_skip_ablation.py": "8553dce9eca0479d269b517b40fda6f5e5580726be605866b1fe1e950a28d4b5",
+    "segmentation/anychest_v3/data.py": "11662cf57ce277b78c50f0dae69d5db63aecdf98b730469479eb8d77967ffd9f",
+    "segmentation/anychest_v3/data_joint_projection.py": "6026ab59e5141875b0c3215900f4fcba4b6fadd24da1a82289674529d6d1b9e5",
+    "foundation/xray_foundation_f2/hospital_training_policy.py": "fe3f6e1201d4753ca1a0c8d29e7603c42c46702ace1853edcafdeb3ea6f45291"
+  },
+  "scope": "Retained encoder/decoder and data loaders; new group-exclusion guard, exact distributed validation, full state and inference export. No data or weights in Git."
+}

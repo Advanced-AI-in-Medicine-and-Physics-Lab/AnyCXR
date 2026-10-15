@@ -1,6 +1,6 @@
 # Training preparation
 
-The repository now retains the **AnyCXR U-Net / CAR training source** alongside the public inference package. This is a preparation release: the source and configuration templates are present, while executable reproducible training remains pending.
+The repository now retains the **AnyCXR U-Net / CAR training source** alongside the public inference package. The legacy source and templates remain preparation-only. An executable experimental [frontal ConvNeXtV2 route](frontal/README.md) now adds real-CXR initialization, DRR fine-tuning, patient-group exclusion, exact validation, explicit resume, and paired full/inference export.
 
 ## Included source
 
@@ -42,6 +42,6 @@ The legacy `get_5fold_dataloaders` constructs five variation-priority train/vali
 
 The legacy trainer writes `latest.pth`, `best_no_jtr.pth` and `best_jtr.pth`. It includes model, optimizer and scheduler state, epoch, phase-related best losses, view/class selection, normalization and resolution metadata. RNG and AMP scaler states are not saved by this source, so those files alone do not establish exact continuation.
 
-Before a training release, complete the fixed split adapter, data/class-order checks, training/inference architecture compatibility and checkpoint export validation. Record the actual configuration, source weights, metrics and hashes with the selected checkpoint. No training or image-data access was performed to prepare this directory.
+Before a training release, complete the fixed split adapter, data/class-order checks, training/inference architecture compatibility and checkpoint export validation. Record the actual configuration, source weights, metrics and hashes with the selected checkpoint. The original legacy import involved no training or image-data access. The separate frontal integration is validated against retained checkpoints and a bounded segmentation experiment; see its own documentation for scope.
 
 See the [checkpoint registry](../checkpoints/README.md) and [HF model-card preparation](../hf/README.md) for the paired full/inference release layout.

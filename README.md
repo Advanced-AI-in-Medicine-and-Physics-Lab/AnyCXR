@@ -15,7 +15,7 @@
   <a href="#installation"><img src="https://img.shields.io/badge/Get_started-Installation-336c91?style=flat-square" alt="Installation"></a>
   <a href="#quick-start"><img src="https://img.shields.io/badge/CLI-Quick_start-336c91?style=flat-square" alt="CLI quick start"></a>
   <a href="#anatomical-structures"><img src="https://img.shields.io/badge/Anatomy-54_structures-7752a4?style=flat-square" alt="54 anatomical structures"></a>
-  <a href="#training"><img src="https://img.shields.io/badge/Training-Preparation-7752a4?style=flat-square" alt="Training preparation"></a>
+  <a href="#training"><img src="https://img.shields.io/badge/Training-Experimental-7752a4?style=flat-square" alt="Experimental training"></a>
 </p>
 <p align="center">
   <img src="docs/assets/anycxr-examples.png" alt="Bundled synthetic PA, lateral and 45-degree oblique images with existing AnyCXR segmentation overlays" width="100%">
@@ -23,7 +23,7 @@
 
 **AnyCXR** learns chest X-ray anatomy from CT-derived synthetic radiographs and partial anatomical labels. Multi-stage Domain Randomization (MSDR) varies projection geometry and image appearance, while Conditional Joint Annotation Regularization (CAR) models joint anatomy under incomplete supervision. The inference package exports 54 anatomical channels as masks and color overlays.
 
-This is the **primary lab repository** for AnyCXR. The current inference release includes the package, example inputs and outputs, Docker support, and evaluation scripts. The repository also contains [training source and configuration templates](training/README.md), plus [full/inference checkpoint placeholders](checkpoints/README.md) for the next release. Executable training integration and new weights are still in preparation.
+This is the **primary lab repository** for AnyCXR. The current inference release includes the package, example inputs and outputs, Docker support, and evaluation scripts. The repository also contains [training source and configuration templates](training/README.md), plus [full/inference checkpoint placeholders](checkpoints/README.md) for the next release. An experimental [frontal ConvNeXtV2 training and inference route](training/frontal/README.md) is also available; new weights remain unpublished.
 
 [Installation](#installation) · [Quick start](#quick-start) · [Model weights](#model-weights) · [Structures](#anatomical-structures) · [Method](#method) · [Training](#training) · [Evaluation](#evaluation) · [Citation](#citation)
 
@@ -78,7 +78,7 @@ This bundle is **inference-only**: optimizer and scheduler states were removed.
 | Oblique | Latest, best without CAR, best with CAR | Shared oblique weights | **Placeholder** |
 | Combined | — | PA + lateral + oblique bundle | **Placeholder** |
 
-The [checkpoint registry](checkpoints/README.md) reserves **13 future artifacts**. Full checkpoints and slim inference weights will be prepared as two HF release types, with [model-card templates](hf/README.md) already in the repository. New HF repository names and weights are unassigned; the entries above are not download links and do not replace the existing bundle.
+The [checkpoint registry](checkpoints/README.md) reserves **13 legacy artifacts** plus a separate experimental frontal full/inference pair. Full checkpoints and slim inference weights will be prepared as two HF release types, with [model-card templates](hf/README.md) already in the repository. New HF repository names and weights are unassigned; the entries above are not download links and do not replace the existing bundle.
 
 ## Quick start
 
@@ -219,7 +219,9 @@ The [training directory](training/README.md) includes the retained AnyCXR U-Net/
 python training/train.py --config training/configs/pa.json --dry-run
 ```
 
-This reports the unfilled data/split/output fields and reserved checkpoint slots. **Training is not yet enabled through this entry point.** Fixed split integration, actual data/configuration provenance and training-to-inference checkpoint compatibility remain pending. Optional dependencies for the retained source are available with `python -m pip install -e '.[train]'`.
+This reports the unfilled data/split/output fields and reserved legacy checkpoint slots. **This legacy entry point remains preparation-only.**
+
+For executable AP/PA training, see the [experimental frontal route](training/frontal/README.md): real-CXR encoder initialization, fresh CAS-lite/AMFS segmentation decoder, patient-group exclusion across D3 and CT/DRR, exact distributed validation, and paired full/inference checkpoint export. It uses 384-pixel inputs and 96-grid outputs. Exported Phase A/B weights have passed strict loading and FP32 AP/PA prediction parity checks; they remain unpublished candidates. Install optional dependencies with `python -m pip install -e '.[train,frontal]'`.
 
 ## Evaluation
 
@@ -239,7 +241,8 @@ The script evaluates PA, lateral and oblique profiles and writes `per_image_dice
 - [x] Lab repository with the existing public inference package, examples and usage documentation.
 - [x] Retain the AnyCXR training source and PA/lateral/oblique configuration templates.
 - [x] Reserve paired full/inference checkpoint slots and prepare two HF model cards.
-- [ ] Complete executable training integration with a frozen split and verified export compatibility.
+- [x] Integrate experimental frontal training, frozen group exclusions, full checkpoint state and verified inference export.
+- [ ] Validate and select new frontal weights; keep legacy lateral/oblique training templates separate.
 - [ ] Update the model and weights after the next checkpoint is supplied.
 - [ ] Publish full training checkpoints and a separate inference-only bundle on Hugging Face.
 - [ ] Prepare the FLUX and BAAI data workflow and evaluate retraining under a defined protocol.
