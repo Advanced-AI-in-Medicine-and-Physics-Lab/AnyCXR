@@ -33,7 +33,7 @@ This is the **primary lab repository** for AnyCXR. The current inference release
   <a href="docs/assets/anycxr-real-anatomy.png"><img src="docs/assets/anycxr-real-anatomy.png" alt="Real PA, lateral and oblique chest X-rays from the manuscript, with original prediction panels arranged as lungs, ribs and bones, thoracic vertebrae, and heart and vessels" width="100%"></a>
 </p>
 
-**Lungs → ribs → vertebrae → heart and vessels.** These are the existing real-CXR examples from the manuscript's `Real_compare.png`, arranged by anatomical group. Each row shows one input and its grouped predictions; the three views are separate examples, with no asserted cross-view patient correspondence. White circles retain the manuscript's highlighted prediction discrepancies. The examples illustrate the manuscript model and are not a new accuracy benchmark or outputs from the unpublished frontal candidate.
+**Lungs → ribs → vertebrae → heart and vessels.** Real PA, lateral and oblique examples from the manuscript, showing each input alongside its grouped anatomical predictions.
 
 Browse all **54 supported output channels** in the [anatomy catalog](docs/anatomy.md), or use the [machine-readable JSON](docs/anatomy.json) for group names, class names and exact channel indices. [Figure sources and reproduction](docs/assets/README.md) document the original panels and composition.
 

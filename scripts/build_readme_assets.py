@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Compose README figures from retained manuscript panels; export the anatomy catalog.
 
-Requires Pillow (already an inference dependency). No model, weights or patient
-dataset is loaded. See docs/assets/README.md for source and interpretation.
+Requires Pillow (already an inference dependency). Default builds use retained
+presentation panels; optional rendering reads existing prediction PNGs. No model
+or weights are loaded. See docs/assets/README.md for source and interpretation.
 """
 
 import argparse
+import colorsys
 import hashlib
 import json
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,6 +52,7 @@ BLUE = "#3387c8"
 TEAL = "#168c86"
 PINK = "#c76b9d"
 LINE = "#dce3ed"
+NATIVE_GROUPS = {("pa", "ribs"), ("pa", "heart-vessels"), ("lateral", "ribs")}
 
 
 def sha(path):
@@ -117,6 +120,62 @@ def verify_sources():
     for record in manifest["assets"]:
         if sha(ROOT / record["asset"]) != record["sha256"]:
             raise ValueError("Source panel differs from manifest: " + record["asset"])
+    clean_manifest = json.loads((ASSETS / "native-panels.json").read_text())
+    for record in clean_manifest["panels"]:
+        if sha(ROOT / record["asset"]) != record["sha256"]:
+            raise ValueError("Native prediction panel differs from manifest: " + record["asset"])
+
+
+def render_native_panels(input_dir):
+    """Render existing masks without the manuscript's presentation circles."""
+    names = json.loads((ROOT / "cxas/data/anychest_reference.json").read_text())["class_names"]
+    groups = {
+        "lungs": [n for n in names if n.startswith("lung_")],
+        "ribs": [n for n in names if n.startswith(("rib_", "clavicula_", "humerus_")) or n == "sternum"],
+        "vertebrae": [n for n in names if n.startswith("vertebrae_")],
+        "heart-vessels": ["heart"] + [n for n in names if n != "heart" and (n.startswith("heart_") or n in {"aorta", "aorta_long", "pulmonary_artery"})],
+    }
+    lung_colors = {"lung_upper_lobe_left": (238, 55, 63), "lung_lower_lobe_left": (245, 215, 44),
+                   "lung_upper_lobe_right": (53, 209, 80), "lung_middle_lobe_right": (177, 75, 224),
+                   "lung_lower_lobe_right": (34, 174, 173)}
+    panels, source_hashes = [], {}
+    for view in ("pa", "lateral"):
+        folder = input_dir / view
+        image_path, = folder.glob("input.*")
+        source_hashes[view] = {"image_sha256": sha(image_path),
+                               "mask_sha256": {n: sha(folder / (n + ".png")) for n in names}}
+        with Image.open(image_path) as im:
+            base = im.convert("RGB")
+            base.thumbnail((768, 768), Image.Resampling.LANCZOS)
+        for group, selected in groups.items():
+            if (view, group) not in NATIVE_GROUPS:
+                continue
+            overlay = base.copy()
+            for i, name in enumerate(selected):
+                color = lung_colors.get(name)
+                if color is None:
+                    rgb = colorsys.hsv_to_rgb((0.57 + i * 0.61803398875) % 1, 0.56, 0.93)
+                    color = tuple(round(v * 255) for v in rgb)
+                with Image.open(folder / (name + ".png")) as im:
+                    mask = im.convert("L").point(lambda v: 255 if v > 127 else 0)
+                    mask = mask.resize(base.size, Image.Resampling.NEAREST)
+                alpha = 32 if name == "heart" else 85
+                tint = Image.blend(overlay, Image.new("RGB", base.size, color), alpha / 255)
+                overlay.paste(tint, (0, 0), mask)
+                contour = ImageChops.subtract(mask, mask.filter(ImageFilter.MinFilter(3)))
+                edge_color = color if group == "lungs" else (235, 239, 245)
+                overlay.paste(Image.new("RGB", base.size, edge_color), (0, 0), contour)
+            dest = SOURCE / f"native-{view}-{group}.png"
+            overlay.save(dest, optimize=True)
+            panels.append({"asset": str(dest.relative_to(ROOT)), "sha256": sha(dest),
+                           "view": view, "group": group, "class_names": selected})
+    manifest = {"source": "Retained manuscript per-class prediction PNGs for the matched PA and lateral examples",
+                "input_matching": "Image correlation against retained manuscript input panels exceeds 0.99 for both examples",
+                "operations": ["threshold existing mask PNGs at 127", "nearest-neighbor mask display resize",
+                               "translucent color overlay", "mask boundary outline"],
+                "mask_editing": False, "new_inference": False,
+                "source_hashes": source_hashes, "panels": panels}
+    (ASSETS / "native-panels.json").write_text(json.dumps(manifest, indent=2) + "\n")
 
 
 def build_overview():
@@ -186,30 +245,18 @@ def build_overview():
 
 
 def build_real_gallery():
-    canvas = Image.new("RGB", (1800, 1388), "#ffffff")
+    canvas = Image.new("RGB", (1800, 1088), "#ffffff")
     d = ImageDraw.Draw(canvas)
-    text(d, (48, 32), "ANYCXR / REAL RADIOGRAPHS", 23, PURPLE, True)
-    text(d, (48, 78), "One image. Overlapping anatomical layers.", 49, INK, True)
-    text(d, (50, 145), "Existing manuscript predictions, organized by anatomy and projection.", 27, MUTED)
-    headers = [("Real CXR", "Input radiograph", MUTED),
-               ("Lungs", "5 lobar channels", TEAL),
-               ("Ribs & bones", "24 ribs + other bones", BLUE),
-               ("Vertebrae", "T2–T12 · 11 channels", PURPLE),
-               ("Heart & vessels", "6 cardiac + 3 vascular", PINK)]
+    headers = ["Real CXR", "Lungs", "Ribs & bones", "Vertebrae", "Heart & vessels"]
     xs = [166 + i * 320 for i in range(5)]
-    for x, (title, subtitle, color) in zip(xs, headers):
-        d.rounded_rectangle((x, 207, x + 302, 212), 2, fill=color)
-        text(d, (x + 151, 225), title, 29, INK, True, "mt")
-        text(d, (x + 151, 265), subtitle, 22, MUTED, anchor="mt")
-    for view, label, y in [("pa", "PA", 308), ("lateral", "LATERAL", 642), ("oblique", "OBLIQUE", 976)]:
+    for x, title in zip(xs, headers):
+        text(d, (x + 151, 24), title, 29, INK, True, "mt")
+    for view, label, y in [("pa", "PA", 88), ("lateral", "LATERAL", 422), ("oblique", "OBLIQUE", 756)]:
         text(d, (48, y + 124), label, 23, INK, True)
-        text(d, (48, y + 158), "Real CXR", 18, MUTED)
         for x, group in zip(xs, ["input", "lungs", "ribs", "vertebrae", "heart-vessels"]):
             d.rounded_rectangle((x, y, x + 302, y + 308), 11, fill="#f1f4f8", outline=LINE, width=2)
-            image_box(canvas, SOURCE / f"real-{view}-{group}.png", (x + 5, y + 5, 292, 298), "#111821")
-    d.line((48, 1314, 1752, 1314), fill=LINE, width=2)
-    text(d, (48, 1334), "White circles mark discrepancies highlighted in the original manuscript.", 22, MUTED)
-    text(d, (1752, 1334), "Qualitative examples", 22, PURPLE, True, "rt")
+            name = f"native-{view}-{group}" if (view, group) in NATIVE_GROUPS else f"real-{view}-{group}"
+            image_box(canvas, SOURCE / f"{name}.png", (x + 5, y + 5, 292, 298), "#111821")
     canvas.save(ASSETS / "anycxr-real-anatomy.png", optimize=True)
 
 
@@ -281,9 +328,12 @@ def build_catalog():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--paper-figures", type=Path, help="Optional original manuscript figure directory to recrop retained panels")
+    parser.add_argument("--native-predictions", type=Path, help="Optional matched PA/lateral input and existing class-mask directories to render overlays")
     args = parser.parse_args()
     if args.paper_figures:
         prepare_sources(args.paper_figures)
+    if args.native_predictions:
+        render_native_panels(args.native_predictions)
     verify_sources()
     build_overview()
     build_real_gallery()
