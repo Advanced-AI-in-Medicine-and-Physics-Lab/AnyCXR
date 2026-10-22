@@ -18,7 +18,7 @@
   <a href="#training"><img src="https://img.shields.io/badge/Training-Experimental-7752a4?style=flat-square" alt="Experimental training"></a>
 </p>
 <p align="center">
-  <img src="docs/assets/anycxr-examples.png" alt="Bundled synthetic PA, lateral and 45-degree oblique images with existing AnyCXR segmentation overlays" width="100%">
+  <img src="docs/assets/anycxr-overview.png" alt="AnyCXR overview: CT anatomy labels, multi-stage randomized synthetic radiographs, partial-label learning with CAR, and real chest X-ray anatomy prediction" width="100%">
 </p>
 
 **AnyCXR** learns chest X-ray anatomy from CT-derived synthetic radiographs and partial anatomical labels. Multi-stage Domain Randomization (MSDR) varies projection geometry and image appearance, while Conditional Joint Annotation Regularization (CAR) models joint anatomy under incomplete supervision. The inference package exports 54 anatomical channels as masks and color overlays.
@@ -26,6 +26,16 @@
 This is the **primary lab repository** for AnyCXR. The current inference release includes the package, example inputs and outputs, Docker support, and evaluation scripts. The repository also contains [training source and configuration templates](training/README.md), plus [full/inference checkpoint placeholders](checkpoints/README.md) for the next release. An experimental [frontal ConvNeXtV2 training and inference route](training/frontal/README.md) is also available; new weights remain unpublished.
 
 [Installation](#installation) · [Quick start](#quick-start) · [Model weights](#model-weights) · [Structures](#anatomical-structures) · [Method](#method) · [Training](#training) · [Evaluation](#evaluation) · [Citation](#citation)
+
+## Anatomy on real chest X-rays
+
+<p align="center">
+  <a href="docs/assets/anycxr-real-anatomy.png"><img src="docs/assets/anycxr-real-anatomy.png" alt="Real PA, lateral and oblique chest X-rays from the manuscript, with original prediction panels arranged as lungs, ribs and bones, thoracic vertebrae, and heart and vessels" width="100%"></a>
+</p>
+
+**Lungs → ribs → vertebrae → heart and vessels.** These are the existing real-CXR examples from the manuscript's `Real_compare.png`, arranged by anatomical group. Each row shows one input and its grouped predictions; the three views are separate examples, with no asserted cross-view patient correspondence. White circles retain the manuscript's highlighted prediction discrepancies. The examples illustrate the manuscript model and are not a new accuracy benchmark or outputs from the unpublished frontal candidate.
+
+Browse all **54 supported output channels** in the [anatomy catalog](docs/anatomy.md), or use the [machine-readable JSON](docs/anatomy.json) for group names, class names and exact channel indices. [Figure sources and reproduction](docs/assets/README.md) document the original panels and composition.
 
 ## Installation
 
@@ -157,16 +167,17 @@ docker run --rm \
 
 ## Anatomical structures
 
-The packaged [reference JSON](cxas/data/anychest_reference.json) defines the exact **54-channel output order**, view names and dataset-folder mapping.
+The [anatomy catalog](docs/anatomy.md) lists every supported structure, and the [machine-readable anatomy JSON](docs/anatomy.json) provides its group and **zero-based channel index**. Both are generated from the packaged [reference JSON](cxas/data/anychest_reference.json), which remains the source of truth for the exact **54-channel output order**, view names and dataset-folder mapping. These counts describe the output taxonomy, not per-structure accuracy.
 
 | Group | Channels | Structures |
 | --- | ---: | --- |
-| Heart | 6 | Whole heart, left/right ventricles, left/right atria, myocardium |
-| Vessels | 3 | Pulmonary artery, `aorta`, `aorta_long` |
 | Lungs | 5 | Left upper/lower lobes; right upper/middle/lower lobes |
 | Ribs | 24 | Left and right ribs 1–12 |
 | Thoracic vertebrae | 11 | T2–T12 |
+| Heart and vessels | 9 | Whole heart, left/right ventricles, left/right atria, myocardium; pulmonary artery, `aorta`, `aorta_long` |
 | Other bones | 5 | Left/right clavicles, left/right humeri, sternum |
+
+The `aorta` and `aorta_long` names denote separate legacy channels; the packaged reference does not specify a finer anatomical distinction. Left/right names refer to the patient's anatomy. Independent channels preserve overlapping projected structures.
 
 <details>
 <summary><b>Show all 54 class names in inference order</b></summary>
@@ -190,16 +201,14 @@ clavicula_left, clavicula_right, humerus_left, humerus_right, sternum
 
 ## Method
 
-<p align="center">
-  <img src="docs/assets/method.svg" alt="CT-derived labels, multi-stage domain randomization, partial-label learning with CAR, and 54-channel inference" width="100%">
-</p>
+The overview at the top adapts the manuscript's CT and 3D anatomy illustrations into the four-stage workflow below.
 
 1. **Synthetic supervision.** Project CT volumes and anatomical labels into matched radiographs and segmentation targets. Quality control determines which class labels are available.
 2. **Multi-stage Domain Randomization (MSDR).** Perturb the CT appearance, projection geometry, and detector/display appearance to diversify the synthetic training domain.
 3. **Partial-label learning with CAR.** Supervise available classes and regularize the joint anatomical representation conditional on the image, allowing training with incomplete annotations.
 4. **Anatomical inference.** Apply the trained model to chest radiographs using the appropriate view profile; export masks for analysis and overlays for inspection.
 
-The examples above are bundled **synthetic radiographs with existing model predictions**. They illustrate the interface and output format; they are not an independent clinical benchmark. The manuscript's real-CXR reference annotations were refined from model predictions, which limits claims of independent segmentation accuracy, particularly for ambiguous soft-tissue boundaries. Review predictions for the intended research use.
+The top overview combines manuscript illustrations with bundled **synthetic radiographs**; the anatomy gallery shows the original **real-CXR predictions**. The manuscript's real-CXR reference annotations were refined from model predictions, which limits claims of independent segmentation accuracy, particularly for ambiguous soft-tissue boundaries. Review predictions for the intended research use.
 
 ## Examples
 
@@ -209,7 +218,7 @@ The examples above are bundled **synthetic radiographs with existing model predi
 DEVICE=cpu bash scripts/build_example_cases.sh
 ```
 
-The top-of-page montage is assembled from those existing example files. No additional inference or training was used to create the montage.
+These runnable synthetic examples are separate from the real-CXR manuscript gallery above. Both README figures are composed from existing material; no additional inference or training was used. Rebuild them and the anatomy catalogs with `python scripts/build_readme_assets.py`; see the [asset documentation](docs/assets/README.md).
 
 ## Training
 
