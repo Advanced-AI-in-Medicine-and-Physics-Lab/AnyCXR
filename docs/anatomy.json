@@ -1,0 +1,432 @@
+{
+  "schema_version": 1,
+  "scope": "Packaged legacy 54-channel inference taxonomy",
+  "channel_index_base": 0,
+  "channel_count": 54,
+  "overlapping_channels": true,
+  "reference": "cxas/data/anychest_reference.json",
+  "reference_sha256": "d4b7516fb8d80852c7846f5a96eb5cfe22e4e742f6eb35ba0e649469a17fc446",
+  "notes": [
+    "Left and right refer to patient anatomy.",
+    "aorta and aorta_long are distinct legacy output names; no further anatomical distinction is inferred here.",
+    "Structure counts describe model outputs, not validated per-structure accuracy.",
+    "Display grouping does not change inference channel order."
+  ],
+  "groups": [
+    {
+      "id": "lungs",
+      "name": "Lungs",
+      "count": 5,
+      "class_names": [
+        "lung_upper_lobe_left",
+        "lung_upper_lobe_right",
+        "lung_middle_lobe_right",
+        "lung_lower_lobe_left",
+        "lung_lower_lobe_right"
+      ]
+    },
+    {
+      "id": "ribs",
+      "name": "Ribs",
+      "count": 24,
+      "class_names": [
+        "rib_left_1",
+        "rib_left_2",
+        "rib_left_3",
+        "rib_left_4",
+        "rib_left_5",
+        "rib_left_6",
+        "rib_left_7",
+        "rib_left_8",
+        "rib_left_9",
+        "rib_left_10",
+        "rib_left_11",
+        "rib_left_12",
+        "rib_right_1",
+        "rib_right_2",
+        "rib_right_3",
+        "rib_right_4",
+        "rib_right_5",
+        "rib_right_6",
+        "rib_right_7",
+        "rib_right_8",
+        "rib_right_9",
+        "rib_right_10",
+        "rib_right_11",
+        "rib_right_12"
+      ]
+    },
+    {
+      "id": "vertebrae",
+      "name": "Thoracic vertebrae",
+      "count": 11,
+      "class_names": [
+        "vertebrae_T2",
+        "vertebrae_T3",
+        "vertebrae_T4",
+        "vertebrae_T5",
+        "vertebrae_T6",
+        "vertebrae_T7",
+        "vertebrae_T8",
+        "vertebrae_T9",
+        "vertebrae_T10",
+        "vertebrae_T11",
+        "vertebrae_T12"
+      ]
+    },
+    {
+      "id": "heart_vessels",
+      "name": "Heart and vessels",
+      "count": 9,
+      "class_names": [
+        "heart_ventricle_left",
+        "heart_atrium_left",
+        "heart_ventricle_right",
+        "heart_atrium_right",
+        "heart_myocardium",
+        "pulmonary_artery",
+        "heart",
+        "aorta",
+        "aorta_long"
+      ]
+    },
+    {
+      "id": "other_bones",
+      "name": "Other bones",
+      "count": 5,
+      "class_names": [
+        "clavicula_left",
+        "clavicula_right",
+        "humerus_left",
+        "humerus_right",
+        "sternum"
+      ]
+    }
+  ],
+  "structures": [
+    {
+      "channel_index": 0,
+      "class_name": "heart_ventricle_left",
+      "display_name": "Left ventricle",
+      "group": "heart_vessels"
+    },
+    {
+      "channel_index": 1,
+      "class_name": "heart_atrium_left",
+      "display_name": "Left atrium",
+      "group": "heart_vessels"
+    },
+    {
+      "channel_index": 2,
+      "class_name": "heart_ventricle_right",
+      "display_name": "Right ventricle",
+      "group": "heart_vessels"
+    },
+    {
+      "channel_index": 3,
+      "class_name": "heart_atrium_right",
+      "display_name": "Right atrium",
+      "group": "heart_vessels"
+    },
+    {
+      "channel_index": 4,
+      "class_name": "heart_myocardium",
+      "display_name": "Myocardium",
+      "group": "heart_vessels"
+    },
+    {
+      "channel_index": 5,
+      "class_name": "pulmonary_artery",
+      "display_name": "Pulmonary artery",
+      "group": "heart_vessels"
+    },
+    {
+      "channel_index": 6,
+      "class_name": "heart",
+      "display_name": "Whole heart",
+      "group": "heart_vessels"
+    },
+    {
+      "channel_index": 7,
+      "class_name": "rib_left_1",
+      "display_name": "Left rib 1",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 8,
+      "class_name": "rib_left_2",
+      "display_name": "Left rib 2",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 9,
+      "class_name": "rib_left_3",
+      "display_name": "Left rib 3",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 10,
+      "class_name": "rib_left_4",
+      "display_name": "Left rib 4",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 11,
+      "class_name": "rib_left_5",
+      "display_name": "Left rib 5",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 12,
+      "class_name": "rib_left_6",
+      "display_name": "Left rib 6",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 13,
+      "class_name": "rib_left_7",
+      "display_name": "Left rib 7",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 14,
+      "class_name": "rib_left_8",
+      "display_name": "Left rib 8",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 15,
+      "class_name": "rib_left_9",
+      "display_name": "Left rib 9",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 16,
+      "class_name": "rib_left_10",
+      "display_name": "Left rib 10",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 17,
+      "class_name": "rib_left_11",
+      "display_name": "Left rib 11",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 18,
+      "class_name": "rib_left_12",
+      "display_name": "Left rib 12",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 19,
+      "class_name": "rib_right_1",
+      "display_name": "Right rib 1",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 20,
+      "class_name": "rib_right_2",
+      "display_name": "Right rib 2",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 21,
+      "class_name": "rib_right_3",
+      "display_name": "Right rib 3",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 22,
+      "class_name": "rib_right_4",
+      "display_name": "Right rib 4",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 23,
+      "class_name": "rib_right_5",
+      "display_name": "Right rib 5",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 24,
+      "class_name": "rib_right_6",
+      "display_name": "Right rib 6",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 25,
+      "class_name": "rib_right_7",
+      "display_name": "Right rib 7",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 26,
+      "class_name": "rib_right_8",
+      "display_name": "Right rib 8",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 27,
+      "class_name": "rib_right_9",
+      "display_name": "Right rib 9",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 28,
+      "class_name": "rib_right_10",
+      "display_name": "Right rib 10",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 29,
+      "class_name": "rib_right_11",
+      "display_name": "Right rib 11",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 30,
+      "class_name": "rib_right_12",
+      "display_name": "Right rib 12",
+      "group": "ribs"
+    },
+    {
+      "channel_index": 31,
+      "class_name": "aorta",
+      "display_name": "Aorta (aorta channel)",
+      "group": "heart_vessels"
+    },
+    {
+      "channel_index": 32,
+      "class_name": "vertebrae_T2",
+      "display_name": "Thoracic vertebra T2",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 33,
+      "class_name": "vertebrae_T3",
+      "display_name": "Thoracic vertebra T3",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 34,
+      "class_name": "vertebrae_T4",
+      "display_name": "Thoracic vertebra T4",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 35,
+      "class_name": "vertebrae_T5",
+      "display_name": "Thoracic vertebra T5",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 36,
+      "class_name": "vertebrae_T6",
+      "display_name": "Thoracic vertebra T6",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 37,
+      "class_name": "vertebrae_T7",
+      "display_name": "Thoracic vertebra T7",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 38,
+      "class_name": "vertebrae_T8",
+      "display_name": "Thoracic vertebra T8",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 39,
+      "class_name": "vertebrae_T9",
+      "display_name": "Thoracic vertebra T9",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 40,
+      "class_name": "vertebrae_T10",
+      "display_name": "Thoracic vertebra T10",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 41,
+      "class_name": "vertebrae_T11",
+      "display_name": "Thoracic vertebra T11",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 42,
+      "class_name": "vertebrae_T12",
+      "display_name": "Thoracic vertebra T12",
+      "group": "vertebrae"
+    },
+    {
+      "channel_index": 43,
+      "class_name": "aorta_long",
+      "display_name": "Aorta (aorta_long channel)",
+      "group": "heart_vessels"
+    },
+    {
+      "channel_index": 44,
+      "class_name": "lung_upper_lobe_left",
+      "display_name": "Left upper lung lobe",
+      "group": "lungs"
+    },
+    {
+      "channel_index": 45,
+      "class_name": "lung_upper_lobe_right",
+      "display_name": "Right upper lung lobe",
+      "group": "lungs"
+    },
+    {
+      "channel_index": 46,
+      "class_name": "lung_middle_lobe_right",
+      "display_name": "Right middle lung lobe",
+      "group": "lungs"
+    },
+    {
+      "channel_index": 47,
+      "class_name": "lung_lower_lobe_left",
+      "display_name": "Left lower lung lobe",
+      "group": "lungs"
+    },
+    {
+      "channel_index": 48,
+      "class_name": "lung_lower_lobe_right",
+      "display_name": "Right lower lung lobe",
+      "group": "lungs"
+    },
+    {
+      "channel_index": 49,
+      "class_name": "clavicula_left",
+      "display_name": "Left clavicle",
+      "group": "other_bones"
+    },
+    {
+      "channel_index": 50,
+      "class_name": "clavicula_right",
+      "display_name": "Right clavicle",
+      "group": "other_bones"
+    },
+    {
+      "channel_index": 51,
+      "class_name": "humerus_left",
+      "display_name": "Left humerus",
+      "group": "other_bones"
+    },
+    {
+      "channel_index": 52,
+      "class_name": "humerus_right",
+      "display_name": "Right humerus",
+      "group": "other_bones"
+    },
+    {
+      "channel_index": 53,
+      "class_name": "sternum",
+      "display_name": "Sternum",
+      "group": "other_bones"
+    }
+  ]
+}

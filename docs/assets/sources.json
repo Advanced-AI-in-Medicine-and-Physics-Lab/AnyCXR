@@ -1,0 +1,217 @@
+{
+  "source_repository": "https://github.com/Agaresd47/Anycxr_overleaf",
+  "source_commit": "c79c1383774aa766b5172f49e305dcbd3a3bb9f6",
+  "pixel_operations": [
+    "crop",
+    "aspect-preserving resize",
+    "layout"
+  ],
+  "clinical_panels": "Original manuscript predictions, including discrepancy circles.",
+  "view_relationship": "Separate examples; cross-view patient identity is not established.",
+  "assets": [
+    {
+      "asset": "docs/assets/source/real-pa-input.png",
+      "sha256": "9c59a3f5d6537fc0dada2700afee7ba5629d1deabfe488ca5af467270281f530",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        9,
+        59,
+        547,
+        557
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-pa-lungs.png",
+      "sha256": "f971063a4aa100864552d1815a62c914944cb5197ab25f09054eaacff2c9bbc2",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1141,
+        297,
+        1390,
+        550
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-pa-ribs.png",
+      "sha256": "57b5d7f63df09987d5d2163a378201d5ce51716e714c8e07973e1bee039b533f",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        596,
+        297,
+        845,
+        550
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-pa-vertebrae.png",
+      "sha256": "8dcfff2f27ac529d2b162c0317f43e2f15f7bc50ac750e2090b1e3222a1661c5",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        868,
+        297,
+        1117,
+        550
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-pa-heart-vessels.png",
+      "sha256": "70b1e97e33fea6714c6776f59406423097cfbfe1c60b381f9743e1b7f50e157d",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1414,
+        297,
+        1663,
+        550
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-lateral-input.png",
+      "sha256": "db8a0ee1ac87e2802145b6945ff99951f4712ac842369e554ed06212a876eb60",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        9,
+        617,
+        547,
+        1103
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-lateral-lungs.png",
+      "sha256": "f7f1034b1b5101059e56ed551716c7bfcfe7739799b92c683645a86552348fa6",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1131,
+        869,
+        1396,
+        1106
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-lateral-ribs.png",
+      "sha256": "1fbf09802282b306e1aa5e2a8557259bedf0997456366651cea8022548904364",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        596,
+        869,
+        862,
+        1106
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-lateral-vertebrae.png",
+      "sha256": "750f0c82c557d8d07ebebf1c6ba3378c415da4944caf4f3988f98485091e4e1a",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        864,
+        869,
+        1129,
+        1106
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-lateral-heart-vessels.png",
+      "sha256": "63725d17675bec21775749f521022780975aaa57f40c5022ca7a2c9137226de2",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1398,
+        869,
+        1663,
+        1106
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-oblique-input.png",
+      "sha256": "27fd2a2389e191dcea18b583db4a90ecdf591b44a9cfe7bf3eed81159b611511",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        7,
+        1142,
+        399,
+        1509
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-oblique-lungs.png",
+      "sha256": "bf040df7a3ecdf54c5ecba88771dae42cd090cf3761a0f37e71f8d0fdb25c90c",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1059,
+        1180,
+        1349,
+        1496
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-oblique-ribs.png",
+      "sha256": "d5b280a09e8e4e8edbe712847acd46f60091665c1cb85a4cd86c6cec0df57b80",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        474,
+        1180,
+        765,
+        1496
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-oblique-vertebrae.png",
+      "sha256": "cb78f56e5ab24097fb2b779a3b5a603f228bcbc44e63b8fc56f1ce3eb0220e10",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        766,
+        1180,
+        1057,
+        1496
+      ]
+    },
+    {
+      "asset": "docs/assets/source/real-oblique-heart-vessels.png",
+      "sha256": "13a55698060783c6c6011b2519c280e69d79ec99b0c1bf2f828d3bbe97b336d3",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1351,
+        1180,
+        1642,
+        1496
+      ]
+    },
+    {
+      "asset": "docs/assets/source/paper-ct.png",
+      "sha256": "7293ed08138b3b2deaa30dfa87886523ffac076ee6542955ca617804b06315ee",
+      "source_file": "figure/Figure_Method_Data.png",
+      "source_sha256": "9ea3987528a9faf0286d2bc4b11a897480dddec38121284730cc871112bdc5d4",
+      "crop_xyxy": [
+        28,
+        90,
+        247,
+        310
+      ]
+    },
+    {
+      "asset": "docs/assets/source/paper-anatomy.png",
+      "sha256": "8b851e746bd11c176b1dc90c0f9aa09b1e49ef928ab3645cac63d25c6a4b263b",
+      "source_file": "figure/Figure_Method_Data.png",
+      "source_sha256": "9ea3987528a9faf0286d2bc4b11a897480dddec38121284730cc871112bdc5d4",
+      "crop_xyxy": [
+        766,
+        482,
+        998,
+        786
+      ]
+    }
+  ]
+}
