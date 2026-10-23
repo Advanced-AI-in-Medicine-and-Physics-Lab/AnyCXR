@@ -15,7 +15,7 @@ def parse_args() -> argparse.Namespace:
         "--input-path",
         type=Path,
         required=True,
-        help="Path to a PNG, JPEG, DICOM file, or to a folder containing supported files.",
+        help="Path to a PNG, JPEG, DICOM or 2D NIfTI (.nii/.nii.gz) radiograph, or a folder of supported files.",
     )
     parser.add_argument(
         "--output-dir",

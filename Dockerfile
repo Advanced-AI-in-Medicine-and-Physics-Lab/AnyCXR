@@ -1,4 +1,5 @@
-FROM pytorch/pytorch:2.5.1-cpu
+ARG PYTORCH_IMAGE=pytorch/pytorch:2.8.0-cuda12.8-cudnn9-runtime
+FROM ${PYTORCH_IMAGE}
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_NO_CACHE_DIR=1 \
