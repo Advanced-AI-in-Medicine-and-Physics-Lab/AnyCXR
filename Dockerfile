@@ -17,5 +17,5 @@ COPY . /workspace/AnyCXR
 
 RUN pip install --upgrade pip && pip install -e .
 
-ENTRYPOINT ["anychest-infer"]
+ENTRYPOINT ["anycxr"]
 CMD ["--help"]

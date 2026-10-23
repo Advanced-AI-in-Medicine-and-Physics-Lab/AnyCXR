@@ -9,7 +9,7 @@ from cxas.checkpoints import AVAILABLE_BUNDLE_PROFILES
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run AnyChest inference on a single image, a flat folder, or a dataset-style folder tree."
+        description="Run AnyCXR inference on a single image, a flat folder, or a dataset-style folder tree."
     )
     parser.add_argument(
         "--input-path",
@@ -27,7 +27,7 @@ def parse_args() -> argparse.Namespace:
         "--checkpoint",
         type=Path,
         required=True,
-        help="Path to a local AnyChest checkpoint file or merged inference bundle downloaded from Hugging Face.",
+        help="Path to a local AnyCXR checkpoint file or merged inference bundle downloaded from Hugging Face.",
     )
     parser.add_argument(
         "--profile",
@@ -44,7 +44,7 @@ def parse_args() -> argparse.Namespace:
         "--metadata-json",
         type=Path,
         default=None,
-        help="Optional path to a custom inference reference JSON. Defaults to the packaged AnyChest reference.",
+        help="Optional path to a custom inference reference JSON. Defaults to the packaged AnyCXR reference.",
     )
     parser.add_argument("--device", default="cuda:0", help="Torch device, e.g. cuda:0 or cpu.")
     parser.add_argument("--batch-size", type=int, default=8, help="Inference batch size.")
