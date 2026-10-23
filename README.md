@@ -48,10 +48,10 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -e .
-anychest-infer --help
+anycxr --help
 ```
 
-The project is named AnyCXR; the installed command retains its existing name, **`anychest-infer`**. The package installs PyTorch and the image-processing dependencies declared in [pyproject.toml](pyproject.toml). For GPU inference, use a PyTorch build compatible with your CUDA environment. CPU inference is available with `--device cpu`.
+The installed command is **`anycxr`**. The previous `anychest-infer` command remains available as a compatibility alias. The package installs PyTorch and the image-processing dependencies declared in [pyproject.toml](pyproject.toml). For GPU inference, use a PyTorch build compatible with your CUDA environment. CPU inference is available with `--device cpu`.
 
 ## Model weights
 
@@ -95,7 +95,7 @@ The [checkpoint registry](checkpoints/README.md) reserves **13 legacy artifacts*
 Run the bundled PA example:
 
 ```bash
-anychest-infer \
+anycxr \
   --input-path examples/inputs/pa/t_10955_a_1.png \
   --output-dir outputs/pa \
   --checkpoint weights/anychest_inference_bundle.pt \
@@ -106,7 +106,7 @@ anychest-infer \
 For a lateral radiograph, use `--profile la`. For a 45° oblique radiograph, use `--profile oblique_45`:
 
 ```bash
-anychest-infer \
+anycxr \
   --input-path /path/to/image.png \
   --output-dir outputs/oblique \
   --checkpoint weights/anychest_inference_bundle.pt \
@@ -142,7 +142,7 @@ outputs/pa/PA/
 | `--view-name` | Explicit view metadata for ambiguous inputs | Inferred from profile/layout |
 | `--metadata-json` | Override the packaged reference JSON | Packaged reference |
 
-All save modes retain separate anatomical channels. Projected structures can overlap, so the output is not a single mutually exclusive label map. See `anychest-infer --help` for all options.
+All save modes retain separate anatomical channels. Projected structures can overlap, so the output is not a single mutually exclusive label map. See `anycxr --help` for all options.
 
 ### Docker
 

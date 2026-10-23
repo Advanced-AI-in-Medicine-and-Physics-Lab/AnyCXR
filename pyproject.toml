@@ -35,6 +35,7 @@ dependencies = [
 ]
 
 [project.scripts]
+anycxr = "seg:main"
 anychest-infer = "seg:main"
 
 [project.optional-dependencies]
