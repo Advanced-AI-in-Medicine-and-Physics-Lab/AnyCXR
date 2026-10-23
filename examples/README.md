@@ -1,6 +1,6 @@
 # Example Cases
 
-This directory contains small public-facing example cases derived from `Dataset003_Full/test_case`.
+This directory contains synthetic chest radiographs and example anatomical segmentation outputs for the public inference package.
 
 ## Included Profiles
 

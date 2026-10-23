@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-import SimpleITK as sitk
 import torch
 import torch.nn.functional as F2
 import torchvision.transforms.functional as F
@@ -17,12 +16,12 @@ from tqdm import tqdm
 
 from cxas.augmentation import ControlPointAugmentation
 from cxas.checkpoints import load_checkpoint
+from cxas.input_io import image_stem, is_supported_file, load_grayscale_array
 from cxas.label_mapper import colors
 from cxas.models.UNet.unet_model import UNet
 
 THIS_DIR = Path(__file__).parent
 DEFAULT_REFERENCE_JSON = THIS_DIR / "data" / "anychest_reference.json"
-SUPPORTED_IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".dcm", ".dicom"}
 
 
 class CXAS_Segmentor:
@@ -123,19 +122,10 @@ class CXAS_Segmentor:
 
     @staticmethod
     def _is_supported_file(path: Path) -> bool:
-        return path.is_file() and path.suffix.lower() in SUPPORTED_IMAGE_SUFFIXES
+        return is_supported_file(path)
 
     def _load_grayscale_array(self, path: Path) -> np.ndarray:
-        suffix = path.suffix.lower()
-        if suffix in {".png", ".jpg", ".jpeg"}:
-            return np.array(Image.open(path).convert("L"), dtype=np.float32)
-        if suffix in {".dcm", ".dicom"}:
-            image = sitk.ReadImage(str(path))
-            array = sitk.GetArrayFromImage(image).astype(np.float32)
-            if array.ndim == 3:
-                array = array[0]
-            return array
-        raise ValueError(f"Unsupported input file type: {path.suffix}")
+        return load_grayscale_array(path)
 
     def _load_uint8_overlay_base(self, path: Path) -> np.ndarray:
         array = self._load_grayscale_array(path)
@@ -270,7 +260,7 @@ class CXAS_Segmentor:
         rel_dir = relative_path.parent
         overlay_dir = output_base_path / detected_view_name / "overlays" / rel_dir
         overlay_dir.mkdir(parents=True, exist_ok=True)
-        overlay_path = overlay_dir / f"{relative_path.stem}_overlay.png"
+        overlay_path = overlay_dir / f"{image_stem(relative_path)}_overlay.png"
         Image.fromarray(np.clip(overlay, 0, 255).astype(np.uint8)).save(overlay_path)
 
     def _save_augmented_input_temp_png(
@@ -302,7 +292,7 @@ class CXAS_Segmentor:
         image_paths = [item[0] for item in batch_data]
         view_names = [item[1] for item in batch_data]
         rel_paths = [item[2] for item in batch_data]
-        img_stems = [path.stem for path in image_paths]
+        img_stems = [image_stem(path) for path in image_paths]
         angles = [self._get_view_angle(view_name) for view_name in view_names]
         view_angle_tensor = torch.tensor(angles, dtype=torch.float32, device=self.device)
         is_multi_aug_npy_mode = self.save_option == "total" and self.save_format == "npy"
@@ -423,7 +413,7 @@ class CXAS_Segmentor:
             files = [
                 path
                 for path in base_images_path.rglob("*")
-                if path.is_file() and path.suffix.lower() in SUPPORTED_IMAGE_SUFFIXES
+                if self._is_supported_file(path)
             ]
             for file_path in files:
                 all_image_paths.append((file_path, view_name, file_path.relative_to(base_images_path)))
@@ -437,7 +427,7 @@ class CXAS_Segmentor:
         files = [
             path
             for path in input_base_path.rglob("*")
-            if path.is_file() and path.suffix.lower() in SUPPORTED_IMAGE_SUFFIXES
+            if self._is_supported_file(path)
         ]
         if not files:
             return []
