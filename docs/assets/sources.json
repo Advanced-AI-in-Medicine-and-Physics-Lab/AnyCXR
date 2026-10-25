@@ -6,7 +6,7 @@
     "aspect-preserving resize",
     "layout"
   ],
-  "clinical_panels": "Original manuscript predictions, including discrepancy circles.",
+  "clinical_panels": "Doctor-prefixed panels are the manuscript's physician-refined annotation rows; other panels retain the original inputs and predictions.",
   "view_relationship": "Separate examples; cross-view patient identity is not established.",
   "assets": [
     {
@@ -19,7 +19,8 @@
         59,
         547,
         557
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-pa-lungs.png",
@@ -31,7 +32,8 @@
         297,
         1390,
         550
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-pa-ribs.png",
@@ -43,7 +45,8 @@
         297,
         845,
         550
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-pa-vertebrae.png",
@@ -55,7 +58,8 @@
         297,
         1117,
         550
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-pa-heart-vessels.png",
@@ -67,7 +71,8 @@
         297,
         1663,
         550
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-lateral-input.png",
@@ -79,7 +84,8 @@
         617,
         547,
         1103
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-lateral-lungs.png",
@@ -91,7 +97,8 @@
         869,
         1396,
         1106
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-lateral-ribs.png",
@@ -103,7 +110,8 @@
         869,
         862,
         1106
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-lateral-vertebrae.png",
@@ -115,7 +123,8 @@
         869,
         1129,
         1106
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-lateral-heart-vessels.png",
@@ -127,7 +136,8 @@
         869,
         1663,
         1106
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-oblique-input.png",
@@ -139,7 +149,8 @@
         1142,
         399,
         1509
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-oblique-lungs.png",
@@ -151,7 +162,8 @@
         1180,
         1349,
         1496
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-oblique-ribs.png",
@@ -163,7 +175,8 @@
         1180,
         765,
         1496
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-oblique-vertebrae.png",
@@ -175,7 +188,8 @@
         1180,
         1057,
         1496
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/real-oblique-heart-vessels.png",
@@ -187,7 +201,8 @@
         1180,
         1642,
         1496
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/paper-ct.png",
@@ -199,7 +214,8 @@
         90,
         247,
         310
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
     },
     {
       "asset": "docs/assets/source/paper-anatomy.png",
@@ -211,7 +227,112 @@
         482,
         998,
         786
-      ]
+      ],
+      "panel_type": "retained_manuscript_panel"
+    },
+    {
+      "asset": "docs/assets/source/doctor-pa-lungs.png",
+      "sha256": "974315a4432eb4eb33b590fc55f35bd0d68ca281996e6f307dce3c0c9a74bef0",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1141,
+        32,
+        1390,
+        285
+      ],
+      "panel_type": "physician_refined_annotation"
+    },
+    {
+      "asset": "docs/assets/source/doctor-pa-ribs.png",
+      "sha256": "03d6ed1c583ded6437be08431a3beabf783f043b3b26075ec6f84ec4a47ada61",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        596,
+        32,
+        845,
+        285
+      ],
+      "panel_type": "physician_refined_annotation"
+    },
+    {
+      "asset": "docs/assets/source/doctor-pa-vertebrae.png",
+      "sha256": "975ff94f99d89355b65a516f98ef983b415a7774e784f8aff0942f41b1043f16",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        869,
+        32,
+        1117,
+        285
+      ],
+      "panel_type": "physician_refined_annotation"
+    },
+    {
+      "asset": "docs/assets/source/doctor-pa-heart-vessels.png",
+      "sha256": "fd3f548f4c8ade7fde0b7969d2a0b4504d3fae1805cb585f4a584c434728d06f",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1414,
+        32,
+        1663,
+        285
+      ],
+      "panel_type": "physician_refined_annotation"
+    },
+    {
+      "asset": "docs/assets/source/doctor-lateral-lungs.png",
+      "sha256": "a799ae74327e398643ae4f947c70fce4d9541c06575cbf8d9ee5a0465567eb4c",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1131,
+        592,
+        1396,
+        829
+      ],
+      "panel_type": "physician_refined_annotation"
+    },
+    {
+      "asset": "docs/assets/source/doctor-lateral-ribs.png",
+      "sha256": "e79031a808c3607bfa256f7a328b2f5913fb0285576ad8ef9be7587960ef26bb",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        596,
+        592,
+        862,
+        829
+      ],
+      "panel_type": "physician_refined_annotation"
+    },
+    {
+      "asset": "docs/assets/source/doctor-lateral-vertebrae.png",
+      "sha256": "90571cc5ec39a842107b866478e05181bf29374646f9d45d9c30d27db568754f",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        864,
+        592,
+        1129,
+        829
+      ],
+      "panel_type": "physician_refined_annotation"
+    },
+    {
+      "asset": "docs/assets/source/doctor-lateral-heart-vessels.png",
+      "sha256": "964586df509bace78da0ebd241549a1af19cc878226404fef16d229b54029c62",
+      "source_file": "figure/Real_compare.png",
+      "source_sha256": "02bc15e463fef0d60e0cb779b1158c2b350115d409cf6819ff6f25c81bc52457",
+      "crop_xyxy": [
+        1398,
+        592,
+        1663,
+        829
+      ],
+      "panel_type": "physician_refined_annotation"
     }
   ]
 }

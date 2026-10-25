@@ -45,6 +45,16 @@ CROPS = {
     "paper-ct": ("Figure_Method_Data.png", (28, 90, 247, 310)),
     "paper-anatomy": ("Figure_Method_Data.png", (766, 482, 998, 786)),
 }
+DOCTOR_CROPS = {
+    "doctor-pa-lungs": ("Real_compare.png", (1141, 32, 1390, 285)),
+    "doctor-pa-ribs": ("Real_compare.png", (596, 32, 845, 285)),
+    "doctor-pa-vertebrae": ("Real_compare.png", (869, 32, 1117, 285)),
+    "doctor-pa-heart-vessels": ("Real_compare.png", (1414, 32, 1663, 285)),
+    "doctor-lateral-lungs": ("Real_compare.png", (1131, 592, 1396, 829)),
+    "doctor-lateral-ribs": ("Real_compare.png", (596, 592, 862, 829)),
+    "doctor-lateral-vertebrae": ("Real_compare.png", (864, 592, 1129, 829)),
+    "doctor-lateral-heart-vessels": ("Real_compare.png", (1398, 592, 1663, 829)),
+}
 INK = "#182335"
 MUTED = "#64748b"
 PURPLE = "#7955bc"
@@ -99,17 +109,18 @@ def prepare_sources(paper_dir):
             raise ValueError("Manuscript raster differs from recorded revision: " + filename)
     SOURCE.mkdir(parents=True, exist_ok=True)
     records = []
-    for name, (filename, box) in CROPS.items():
+    for name, (filename, box) in {**CROPS, **DOCTOR_CROPS}.items():
         parent = paper_dir / filename
         dest = SOURCE / (name + ".png")
         with Image.open(parent) as im:
             im.convert("RGB").crop(box).save(dest, optimize=True)
         records.append({"asset": str(dest.relative_to(ROOT)),
                         "sha256": sha(dest), "source_file": "figure/" + filename,
-                        "source_sha256": sha(parent), "crop_xyxy": list(box)})
+                        "source_sha256": sha(parent), "crop_xyxy": list(box),
+                        "panel_type": "physician_refined_annotation" if name in DOCTOR_CROPS else "retained_manuscript_panel"})
     manifest = {"source_repository": PAPER_REPO, "source_commit": PAPER_COMMIT,
                 "pixel_operations": ["crop", "aspect-preserving resize", "layout"],
-                "clinical_panels": "Original manuscript predictions, including discrepancy circles.",
+                "clinical_panels": "Doctor-prefixed panels are the manuscript's physician-refined annotation rows; other panels retain the original inputs and predictions.",
                 "view_relationship": "Separate examples; cross-view patient identity is not established.",
                 "assets": records}
     (ASSETS / "sources.json").write_text(json.dumps(manifest, indent=2) + "\n")
@@ -245,17 +256,17 @@ def build_overview():
 
 
 def build_real_gallery():
-    canvas = Image.new("RGB", (1800, 1088), "#ffffff")
+    canvas = Image.new("RGB", (1800, 754), "#ffffff")
     d = ImageDraw.Draw(canvas)
     headers = ["Real CXR", "Lungs", "Ribs & bones", "Vertebrae", "Heart & vessels"]
     xs = [166 + i * 320 for i in range(5)]
     for x, title in zip(xs, headers):
         text(d, (x + 151, 24), title, 29, INK, True, "mt")
-    for view, label, y in [("pa", "PA", 88), ("lateral", "LATERAL", 422), ("oblique", "OBLIQUE", 756)]:
+    for view, label, y in [("pa", "PA", 88), ("lateral", "LATERAL", 422)]:
         text(d, (48, y + 124), label, 23, INK, True)
         for x, group in zip(xs, ["input", "lungs", "ribs", "vertebrae", "heart-vessels"]):
             d.rounded_rectangle((x, y, x + 302, y + 308), 11, fill="#f1f4f8", outline=LINE, width=2)
-            name = f"native-{view}-{group}" if (view, group) in NATIVE_GROUPS else f"real-{view}-{group}"
+            name = f"real-{view}-input" if group == "input" else f"doctor-{view}-{group}"
             image_box(canvas, SOURCE / f"{name}.png", (x + 5, y + 5, 292, 298), "#111821")
     canvas.save(ASSETS / "anycxr-real-anatomy.png", optimize=True)
 

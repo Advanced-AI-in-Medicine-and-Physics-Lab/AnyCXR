@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "AnyCXR anatomical segmentation inference package."
 readme = "README.md"
 authors = [
-  { name="Anonymous Authors" },
+  { name="Zifei Dong" },
 ]
 license = { text = "Free for non-commercial use" }
 requires-python = ">=3.9"
