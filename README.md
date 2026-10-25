@@ -3,7 +3,7 @@
 </p>
 <h2 align="center">Anatomical segmentation of chest X-rays<br>with synthetic supervision</h2>
 <p align="center">
-  <b>54 anatomical structures · PA, lateral &amp; oblique views</b><br>
+  <b>54 anatomical structures · AP/PA, lateral &amp; oblique views</b><br>
   Multi-stage Domain Randomization &amp; Conditional Joint Annotation Regularization
 </p>
 <p align="center">
@@ -12,7 +12,7 @@
 </p>
 <p align="center">
   <a href="https://arxiv.org/abs/2512.17263"><img src="https://img.shields.io/badge/arXiv-2512.17263-b31b1b?style=flat-square" alt="AnyCXR paper on arXiv"></a>
-  <a href="https://huggingface.co/agaresd/anychest-inference"><img src="https://img.shields.io/badge/🤗_Hugging_Face-Model_weights-7752a4?style=flat-square" alt="Hugging Face model weights"></a>
+  <a href="https://huggingface.co/agaresd/anychest"><img src="https://img.shields.io/badge/🤗_Hugging_Face-Model_weights-7752a4?style=flat-square" alt="Hugging Face model weights"></a>
   <a href="#installation"><img src="https://img.shields.io/badge/Get_started-Installation-336c91?style=flat-square" alt="Installation"></a>
   <a href="#quick-start"><img src="https://img.shields.io/badge/CLI-Quick_start-336c91?style=flat-square" alt="CLI quick start"></a>
   <a href="#anatomical-structures"><img src="https://img.shields.io/badge/Anatomy-54_structures-7752a4?style=flat-square" alt="54 anatomical structures"></a>
@@ -56,11 +56,32 @@ The installed command is **`anycxr`**. The previous `anychest-infer` command rem
 
 ## Model weights
 
-Download the inference bundle from [Hugging Face → agaresd/anychest-inference](https://huggingface.co/agaresd/anychest-inference):
+The current [Hugging Face release → agaresd/anychest](https://huggingface.co/agaresd/anychest) provides **four model families × two checkpoint types = eight files**:
+
+| Model | Supported views | Inference checkpoint | Full training checkpoint |
+| --- | --- | --- | --- |
+| Frontal | AP and PA | [ap_pa.pt](https://huggingface.co/agaresd/anychest/blob/main/inference/ap_pa.pt) | [ap_pa.pt](https://huggingface.co/agaresd/anychest/blob/main/full/ap_pa.pt) |
+| Lateral | LA | [la.pt](https://huggingface.co/agaresd/anychest/blob/main/inference/la.pt) | [la.pt](https://huggingface.co/agaresd/anychest/blob/main/full/la.pt) |
+| Oblique | 22.5°, 45°, 67.5°, 112.5°, 135°, 157.5° | [ob.pt](https://huggingface.co/agaresd/anychest/blob/main/inference/ob.pt) | [ob.pt](https://huggingface.co/agaresd/anychest/blob/main/full/ob.pt) |
+| All views | AP, PA, LA and all six oblique groups | [all_views.pt](https://huggingface.co/agaresd/anychest/blob/main/inference/all_views.pt) | [all_views.pt](https://huggingface.co/agaresd/anychest/blob/main/full/all_views.pt) |
+
+These ConvNeXt V2 Large models output **54 anatomical channels**, using 384 × 384 inputs and a native 96 × 96 mask grid. Inference files are approximately **1 GB** each; full checkpoints are approximately **3 GB** each and retain model, optimizer, scheduler, configuration and random-number state for further training. Full files are selected best-epoch states; continuing beyond a completed training phase requires an explicit new training budget.
 
 ```bash
 python -m pip install huggingface_hub
-hf download agaresd/anychest-inference anychest_inference_bundle.pt --local-dir ./weights
+hf download agaresd/anychest inference/all_views.pt --local-dir ./weights
+# For further training, download full/all_views.pt instead.
+```
+
+Use the matching ConvNeXt V2 model and checkpoint loader for these files. They are separate from the legacy bundle used in the quick-start examples below. [Checkpoint formats, class order and SHA-256 checksums](https://huggingface.co/agaresd/anychest/blob/main/checkpoints.json) accompany the release. Acquisition views are supplied explicitly; the joint model is not claimed to outperform every specialist on every view.
+
+### Legacy inference bundle
+
+The original bundle remains available in the same repository for the existing CLI examples:
+
+```bash
+python -m pip install huggingface_hub
+hf download agaresd/anychest anychest_inference_bundle.pt --local-dir ./weights
 ```
 
 The bundle contains **three model checkpoints**: PA, lateral and oblique. Six angle-specific oblique profiles select the shared oblique checkpoint and the matching view metadata.
@@ -76,7 +97,7 @@ The bundle contains **three model checkpoints**: PA, lateral and oblique. Six an
 | Oblique, 135° | `oblique_135` | `oblique` |
 | Oblique, 157.5° | `oblique_157_5` | `oblique` |
 
-Use `--profile oblique` for a dataset-style directory with view-specific subfolders. For a single image or a flat folder, choose an angle-specific profile. The release does not provide a separate AP checkpoint or continuous angle estimation.
+Use `--profile oblique` for a dataset-style directory with view-specific subfolders. For a single image or a flat folder, choose an angle-specific profile. The legacy bundle supports PA for frontal inference; the current frontal checkpoint above supports both AP and PA. Acquisition angles are not estimated automatically.
 
 This bundle is **inference-only**: optimizer and scheduler states were removed.
 
@@ -268,6 +289,6 @@ If you use AnyCXR in your research, please cite our [arXiv paper](https://arxiv.
 
 ## License and acknowledgments
 
-Source licenses are documented in the repository's [Apache-2.0 license](LICENSE), the inference components' [MIT notice](LICENSES/AnyCXR-inference-MIT.txt), and the retained training source's [CC BY-NC-SA 4.0 license](training/legacy/LICENSE.txt). Additional attribution and inherited licensing declarations are recorded in [NOTICE](NOTICE). Checkpoint terms are provided with the [Hugging Face model release](https://huggingface.co/agaresd/anychest-inference).
+Source licenses are documented in the repository's [Apache-2.0 license](LICENSE), the inference components' [MIT notice](LICENSES/AnyCXR-inference-MIT.txt), and the retained training source's [CC BY-NC-SA 4.0 license](training/legacy/LICENSE.txt). Additional attribution and inherited licensing declarations are recorded in [NOTICE](NOTICE). Checkpoint terms are provided with the [Hugging Face model release](https://huggingface.co/agaresd/anychest).
 
 The initial inference release was maintained at [Agaresd47/AnyCXR](https://github.com/Agaresd47/AnyCXR). README organization and presentation were inspired by [TotalSegmentator](https://github.com/wasserth/TotalSegmentator) and [FleXray](https://flexray.csail.mit.edu/); all displayed segmentation examples are from AnyCXR.
