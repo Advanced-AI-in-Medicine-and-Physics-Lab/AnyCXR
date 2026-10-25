@@ -1,0 +1,280 @@
+{
+  "size": [
+    1800,
+    1117
+  ],
+  "column_gap": 5,
+  "row_gap": 8,
+  "panels": [
+    {
+      "view": "pa",
+      "group": "input",
+      "source": "docs/assets/source/real-pa-input.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        538,
+        498
+      ],
+      "display_xywh": [
+        40,
+        66,
+        346,
+        320
+      ],
+      "annotation_type": "input"
+    },
+    {
+      "view": "pa",
+      "group": "lungs",
+      "source": "docs/assets/source/doctor-pa-lungs.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        249,
+        253
+      ],
+      "display_xywh": [
+        391,
+        50,
+        346,
+        352
+      ],
+      "annotation_type": "physician_refined"
+    },
+    {
+      "view": "pa",
+      "group": "ribs",
+      "source": "docs/assets/source/doctor-pa-ribs.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        249,
+        253
+      ],
+      "display_xywh": [
+        742,
+        50,
+        346,
+        352
+      ],
+      "annotation_type": "physician_refined"
+    },
+    {
+      "view": "pa",
+      "group": "vertebrae",
+      "source": "docs/assets/source/doctor-pa-vertebrae.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        248,
+        253
+      ],
+      "display_xywh": [
+        1093,
+        50,
+        346,
+        353
+      ],
+      "annotation_type": "physician_refined"
+    },
+    {
+      "view": "pa",
+      "group": "heart-vessels",
+      "source": "docs/assets/source/doctor-pa-heart-vessels.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        249,
+        253
+      ],
+      "display_xywh": [
+        1444,
+        50,
+        346,
+        352
+      ],
+      "annotation_type": "physician_refined"
+    },
+    {
+      "view": "lateral",
+      "group": "input",
+      "source": "docs/assets/source/real-lateral-input.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        538,
+        486
+      ],
+      "display_xywh": [
+        40,
+        411,
+        346,
+        313
+      ],
+      "annotation_type": "input"
+    },
+    {
+      "view": "lateral",
+      "group": "lungs",
+      "source": "docs/assets/source/doctor-lateral-lungs.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        265,
+        237
+      ],
+      "display_xywh": [
+        391,
+        413,
+        346,
+        309
+      ],
+      "annotation_type": "physician_refined"
+    },
+    {
+      "view": "lateral",
+      "group": "ribs",
+      "source": "docs/assets/source/doctor-lateral-ribs.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        266,
+        237
+      ],
+      "display_xywh": [
+        742,
+        413,
+        346,
+        308
+      ],
+      "annotation_type": "physician_refined"
+    },
+    {
+      "view": "lateral",
+      "group": "vertebrae",
+      "source": "docs/assets/source/doctor-lateral-vertebrae.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        265,
+        237
+      ],
+      "display_xywh": [
+        1093,
+        413,
+        346,
+        309
+      ],
+      "annotation_type": "physician_refined"
+    },
+    {
+      "view": "lateral",
+      "group": "heart-vessels",
+      "source": "docs/assets/source/doctor-lateral-heart-vessels.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        265,
+        237
+      ],
+      "display_xywh": [
+        1444,
+        413,
+        346,
+        309
+      ],
+      "annotation_type": "physician_refined"
+    },
+    {
+      "view": "oblique",
+      "group": "input",
+      "source": "docs/assets/source/real-oblique-input.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        392,
+        367
+      ],
+      "display_xywh": [
+        40,
+        758,
+        346,
+        324
+      ],
+      "annotation_type": "input"
+    },
+    {
+      "view": "oblique",
+      "group": "lungs",
+      "source": "docs/assets/source/real-oblique-lungs.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        290,
+        316
+      ],
+      "display_xywh": [
+        391,
+        732,
+        346,
+        377
+      ],
+      "annotation_type": "model_prediction"
+    },
+    {
+      "view": "oblique",
+      "group": "ribs",
+      "source": "docs/assets/source/real-oblique-ribs.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        291,
+        316
+      ],
+      "display_xywh": [
+        742,
+        732,
+        346,
+        376
+      ],
+      "annotation_type": "model_prediction"
+    },
+    {
+      "view": "oblique",
+      "group": "vertebrae",
+      "source": "docs/assets/source/real-oblique-vertebrae.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        291,
+        316
+      ],
+      "display_xywh": [
+        1093,
+        732,
+        346,
+        376
+      ],
+      "annotation_type": "model_prediction"
+    },
+    {
+      "view": "oblique",
+      "group": "heart-vessels",
+      "source": "docs/assets/source/real-oblique-heart-vessels.png",
+      "source_crop_xyxy": [
+        0,
+        0,
+        291,
+        316
+      ],
+      "display_xywh": [
+        1444,
+        732,
+        346,
+        376
+      ],
+      "annotation_type": "model_prediction"
+    }
+  ]
+}

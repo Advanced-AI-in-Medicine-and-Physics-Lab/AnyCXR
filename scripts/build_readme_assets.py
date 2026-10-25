@@ -256,19 +256,73 @@ def build_overview():
 
 
 def build_real_gallery():
-    canvas = Image.new("RGB", (1800, 754), "#ffffff")
+    # Keep full anatomical content; strip only flat monochrome source padding.
+    def trim_padding(im):
+        def is_padding(box):
+            extrema = im.crop(box).getextrema()
+            low = min(v[0] for v in extrema)
+            high = max(v[1] for v in extrema)
+            return high - low <= 2 and (high <= 80 or low >= 248)
+
+        left, top, right, bottom = 0, 0, im.width, im.height
+        limit = 6
+        while top < limit and is_padding((left, top, right, top + 1)):
+            top += 1
+        while im.height - bottom < limit and is_padding((left, bottom - 1, right, bottom)):
+            bottom -= 1
+        while left < limit and is_padding((left, top, left + 1, bottom)):
+            left += 1
+        while im.width - right < limit and is_padding((right - 1, top, right, bottom)):
+            right -= 1
+        return im.crop((left, top, right, bottom)), (left, top, right, bottom)
+
+    width, margin, label_width, gap = 1800, 8, 32, 5
+    header_height, row_gap = 50, 8
+    column_width = (width - 2 * margin - label_width - 4 * gap) // 5
+    xs = [margin + label_width + i * (column_width + gap) for i in range(5)]
+    groups = ["input", "lungs", "ribs", "vertebrae", "heart-vessels"]
+    rows = []
+    for view, label in [("pa", "PA"), ("lateral", "LATERAL"), ("oblique", "OBLIQUE")]:
+        panels = []
+        for group in groups:
+            prefix = "real" if group == "input" or view == "oblique" else "doctor"
+            path = SOURCE / f"{prefix}-{view}-{group}.png"
+            with Image.open(path) as original:
+                panel, crop_box = trim_padding(original.convert("RGB"))
+            height = round(panel.height * column_width / panel.width)
+            panel = panel.resize((column_width, height), Image.Resampling.LANCZOS)
+            panels.append((panel, path, crop_box))
+        rows.append((view, label, panels, max(p[0].height for p in panels)))
+
+    height = header_height + sum(row[3] for row in rows) + row_gap * 2 + margin
+    canvas = Image.new("RGB", (width, height), "#ffffff")
     d = ImageDraw.Draw(canvas)
     headers = ["Real CXR", "Lungs", "Ribs & bones", "Vertebrae", "Heart & vessels"]
-    xs = [166 + i * 320 for i in range(5)]
     for x, title in zip(xs, headers):
-        text(d, (x + 151, 24), title, 29, INK, True, "mt")
-    for view, label, y in [("pa", "PA", 88), ("lateral", "LATERAL", 422)]:
-        text(d, (48, y + 124), label, 23, INK, True)
-        for x, group in zip(xs, ["input", "lungs", "ribs", "vertebrae", "heart-vessels"]):
-            d.rounded_rectangle((x, y, x + 302, y + 308), 11, fill="#f1f4f8", outline=LINE, width=2)
-            name = f"real-{view}-input" if group == "input" else f"doctor-{view}-{group}"
-            image_box(canvas, SOURCE / f"{name}.png", (x + 5, y + 5, 292, 298), "#111821")
+        text(d, (x, 9), title, 28, INK, True)
+    y = header_height
+    layout = []
+    for view, label, panels, row_height in rows:
+        label_font = font(25, True)
+        bounds = label_font.getbbox(label)
+        label_image = Image.new("RGBA", (bounds[2] - bounds[0] + 4, bounds[3] - bounds[1] + 4))
+        ImageDraw.Draw(label_image).text((2 - bounds[0], 2 - bounds[1]), label,
+                                       font=label_font, fill="#536176")
+        label_image = label_image.transpose(Image.Transpose.ROTATE_90)
+        canvas.paste(label_image, (margin + (label_width - label_image.width) // 2,
+                                  y + (row_height - label_image.height) // 2), label_image)
+        for x, group, (panel, path, crop_box) in zip(xs, groups, panels):
+            panel_y = y + (row_height - panel.height) // 2
+            canvas.paste(panel, (x, panel_y))
+            layout.append({"view": view, "group": group, "source": str(path.relative_to(ROOT)),
+                           "source_crop_xyxy": list(crop_box),
+                           "display_xywh": [x, panel_y, panel.width, panel.height],
+                           "annotation_type": "input" if group == "input" else
+                           ("model_prediction" if view == "oblique" else "physician_refined")})
+        y += row_height + row_gap
     canvas.save(ASSETS / "anycxr-real-anatomy.png", optimize=True)
+    (ASSETS / "gallery-layout.json").write_text(json.dumps({"size": list(canvas.size),
+        "column_gap": gap, "row_gap": row_gap, "panels": layout}, indent=2) + "\n")
 
 
 def display_name(name):

@@ -31,10 +31,10 @@ This repository provides the AnyCXR inference package, pretrained model weights,
 ## Anatomy on real chest X-rays
 
 <p align="center">
-  <a href="docs/assets/anycxr-real-anatomy.png"><img src="docs/assets/anycxr-real-anatomy.png" alt="Physician-refined anatomical annotations on real PA and lateral chest X-rays: lungs, ribs and bones, thoracic vertebrae, and heart and vessels" width="100%"></a>
+  <a href="docs/assets/anycxr-real-anatomy.png"><img src="docs/assets/anycxr-real-anatomy.png" alt="Compact chest X-ray anatomy gallery: physician-refined PA and lateral annotations, plus oblique model predictions, grouped as lungs, ribs and bones, vertebrae, and heart and vessels" width="100%"></a>
 </p>
 
-**Lungs → ribs → vertebrae → heart and vessels.** Physician-refined anatomical annotations from the manuscript's real PA and lateral chest X-rays, displayed alongside the original inputs.
+**Lungs → ribs → vertebrae → heart and vessels.** PA and lateral rows show the manuscript's **physician-refined annotations**; the oblique (OB) row shows **model predictions**. Each row includes the original radiograph.
 
 Browse all **54 supported output channels** in the [anatomy catalog](docs/anatomy.md), or use the [machine-readable JSON](docs/anatomy.json) for group names, class names and exact channel indices. [Figure sources and reproduction](docs/assets/README.md) document the original panels and composition.
 
