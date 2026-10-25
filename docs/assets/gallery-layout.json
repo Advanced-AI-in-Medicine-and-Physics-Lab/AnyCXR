@@ -1,8 +1,12 @@
 {
   "size": [
     1800,
-    1117
+    1112
   ],
+  "background": "#0b2447",
+  "tile_background": "#14375e",
+  "text_color": "#ffffff",
+  "tile_size": 346,
   "column_gap": 5,
   "row_gap": 8,
   "panels": [
@@ -16,9 +20,15 @@
         538,
         498
       ],
+      "tile_xywh": [
+        40,
+        50,
+        346,
+        346
+      ],
       "display_xywh": [
         40,
-        66,
+        63,
         346,
         320
       ],
@@ -34,11 +44,17 @@
         249,
         253
       ],
-      "display_xywh": [
+      "tile_xywh": [
         391,
         50,
         346,
-        352
+        346
+      ],
+      "display_xywh": [
+        393,
+        50,
+        341,
+        346
       ],
       "annotation_type": "physician_refined"
     },
@@ -52,11 +68,17 @@
         249,
         253
       ],
-      "display_xywh": [
+      "tile_xywh": [
         742,
         50,
         346,
-        352
+        346
+      ],
+      "display_xywh": [
+        744,
+        50,
+        341,
+        346
       ],
       "annotation_type": "physician_refined"
     },
@@ -70,11 +92,17 @@
         248,
         253
       ],
-      "display_xywh": [
+      "tile_xywh": [
         1093,
         50,
         346,
-        353
+        346
+      ],
+      "display_xywh": [
+        1096,
+        50,
+        339,
+        346
       ],
       "annotation_type": "physician_refined"
     },
@@ -88,11 +116,17 @@
         249,
         253
       ],
-      "display_xywh": [
+      "tile_xywh": [
         1444,
         50,
         346,
-        352
+        346
+      ],
+      "display_xywh": [
+        1446,
+        50,
+        341,
+        346
       ],
       "annotation_type": "physician_refined"
     },
@@ -106,9 +140,15 @@
         538,
         486
       ],
+      "tile_xywh": [
+        40,
+        404,
+        346,
+        346
+      ],
       "display_xywh": [
         40,
-        411,
+        420,
         346,
         313
       ],
@@ -124,9 +164,15 @@
         265,
         237
       ],
+      "tile_xywh": [
+        391,
+        404,
+        346,
+        346
+      ],
       "display_xywh": [
         391,
-        413,
+        422,
         346,
         309
       ],
@@ -142,9 +188,15 @@
         266,
         237
       ],
+      "tile_xywh": [
+        742,
+        404,
+        346,
+        346
+      ],
       "display_xywh": [
         742,
-        413,
+        423,
         346,
         308
       ],
@@ -160,9 +212,15 @@
         265,
         237
       ],
+      "tile_xywh": [
+        1093,
+        404,
+        346,
+        346
+      ],
       "display_xywh": [
         1093,
-        413,
+        422,
         346,
         309
       ],
@@ -178,9 +236,15 @@
         265,
         237
       ],
+      "tile_xywh": [
+        1444,
+        404,
+        346,
+        346
+      ],
       "display_xywh": [
         1444,
-        413,
+        422,
         346,
         309
       ],
@@ -196,9 +260,15 @@
         392,
         367
       ],
-      "display_xywh": [
+      "tile_xywh": [
         40,
         758,
+        346,
+        346
+      ],
+      "display_xywh": [
+        40,
+        769,
         346,
         324
       ],
@@ -214,11 +284,17 @@
         290,
         316
       ],
-      "display_xywh": [
+      "tile_xywh": [
         391,
-        732,
+        758,
         346,
-        377
+        346
+      ],
+      "display_xywh": [
+        405,
+        758,
+        318,
+        346
       ],
       "annotation_type": "model_prediction"
     },
@@ -232,11 +308,17 @@
         291,
         316
       ],
-      "display_xywh": [
+      "tile_xywh": [
         742,
-        732,
+        758,
         346,
-        376
+        346
+      ],
+      "display_xywh": [
+        755,
+        758,
+        319,
+        346
       ],
       "annotation_type": "model_prediction"
     },
@@ -250,11 +332,17 @@
         291,
         316
       ],
-      "display_xywh": [
+      "tile_xywh": [
         1093,
-        732,
+        758,
         346,
-        376
+        346
+      ],
+      "display_xywh": [
+        1106,
+        758,
+        319,
+        346
       ],
       "annotation_type": "model_prediction"
     },
@@ -268,11 +356,17 @@
         291,
         316
       ],
-      "display_xywh": [
+      "tile_xywh": [
         1444,
-        732,
+        758,
         346,
-        376
+        346
+      ],
+      "display_xywh": [
+        1457,
+        758,
+        319,
+        346
       ],
       "annotation_type": "model_prediction"
     }

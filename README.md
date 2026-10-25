@@ -31,7 +31,7 @@ This repository provides the AnyCXR inference package, pretrained model weights,
 ## Anatomy on real chest X-rays
 
 <p align="center">
-  <a href="docs/assets/anycxr-real-anatomy.png"><img src="docs/assets/anycxr-real-anatomy.png" alt="Compact chest X-ray anatomy gallery: physician-refined PA and lateral annotations, plus oblique model predictions, grouped as lungs, ribs and bones, vertebrae, and heart and vessels" width="100%"></a>
+  <a href="docs/assets/anycxr-real-anatomy.png"><img src="docs/assets/anycxr-real-anatomy.png" alt="Square-panel chest X-ray anatomy gallery: physician-refined PA and lateral annotations, plus oblique model predictions, grouped as lungs, ribs and bones, vertebrae, and heart and vessels" width="100%"></a>
 </p>
 
 **Lungs → ribs → vertebrae → heart and vessels.** PA and lateral rows show the manuscript's **physician-refined annotations**; the oblique (OB) row shows **model predictions**. Each row includes the original radiograph.

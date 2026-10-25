@@ -55,13 +55,15 @@ DOCTOR_CROPS = {
     "doctor-lateral-vertebrae": ("Real_compare.png", (864, 592, 1129, 829)),
     "doctor-lateral-heart-vessels": ("Real_compare.png", (1398, 592, 1663, 829)),
 }
-INK = "#182335"
-MUTED = "#64748b"
-PURPLE = "#7955bc"
-BLUE = "#3387c8"
-TEAL = "#168c86"
-PINK = "#c76b9d"
-LINE = "#dce3ed"
+BACKGROUND = "#0b2447"
+SURFACE = "#14375e"
+INK = "#ffffff"
+MUTED = "#ccdcf0"
+PURPLE = "#c2a6ff"
+BLUE = "#7ec7ff"
+TEAL = "#67e1d0"
+PINK = "#ffabd7"
+LINE = "#335b85"
 NATIVE_GROUPS = {("pa", "ribs"), ("pa", "heart-vessels"), ("lateral", "ribs")}
 
 
@@ -87,9 +89,10 @@ def text(draw, pos, label, size=26, fill=INK, bold=False, anchor=None):
 def image_box(canvas, path, box, background=None):
     x, y, w, h = box
     if background:
-        ImageDraw.Draw(canvas).rectangle((x, y, x + w, y + h), fill=background)
+        ImageDraw.Draw(canvas).rectangle((x, y, x + w - 1, y + h - 1), fill=background)
     im = Image.open(path).convert("RGB")
-    im.thumbnail((w, h), Image.Resampling.LANCZOS)
+    scale = min(w / im.width, h / im.height)
+    im = im.resize((round(im.width * scale), round(im.height * scale)), Image.Resampling.LANCZOS)
     canvas.paste(im, (int(x + (w - im.width) / 2), int(y + (h - im.height) / 2)))
 
 
@@ -190,30 +193,31 @@ def render_native_panels(input_dir):
 
 
 def build_overview():
-    canvas = Image.new("RGB", (1800, 790), "#ffffff")
+    canvas = Image.new("RGB", (1800, 686), BACKGROUND)
     d = ImageDraw.Draw(canvas)
     text(d, (54, 32), "ANYCXR / SYNTHETIC SUPERVISION", 23, PURPLE, True)
     text(d, (54, 78), "From 3D anatomy to chest X-ray segmentation", 49, INK, True)
     text(d, (56, 145), "CT-derived labels. Diverse projections. Joint anatomical learning.", 28, MUTED)
     xs = [54, 487, 920, 1353]
     colors = [TEAL, BLUE, PURPLE, PINK]
+    badges = ["#127c80", "#1b66b5", "#6b4cb3", "#a94983"]
     titles = ["CT + anatomical labels", "Multi-stage randomization",
               "Partial labels + CAR", "Radiographic anatomy"]
     for i, x in enumerate(xs):
-        d.rounded_rectangle((x, 218, x + 393, 696), 18, fill="#f7f9fc", outline=LINE, width=2)
-        d.rounded_rectangle((x + 20, 240, x + 62, 282), 11, fill=colors[i])
-        text(d, (x + 41, 261), str(i + 1).zfill(2), 22, "white", True, "mm")
-        text(d, (x + 78, 247), ["SUPERVISION", "MSDR", "LEARNING", "INFERENCE"][i], 23, colors[i], True)
-        text(d, (x + 20, 568), titles[i], 27, INK, True)
+        d.rectangle((x, 208, x + 392, 600), fill=SURFACE, outline=LINE, width=1)
+        d.rectangle((x + 20, 228, x + 61, 269), fill=badges[i])
+        text(d, (x + 41, 249), str(i + 1).zfill(2), 22, INK, True, "mm")
+        text(d, (x + 78, 235), ["SUPERVISION", "MSDR", "LEARNING", "INFERENCE"][i], 23, colors[i], True)
+        text(d, (x + 20, 495), titles[i], 27, INK, True)
         if i < 3:
-            arrow(d, (x + 402, 449), (x + 424, 449), "#a5b3c6")
+            arrow(d, (x + 402, 385), (x + 424, 385), BLUE)
 
     x = xs[0]
-    image_box(canvas, SOURCE / "paper-ct.png", (x + 21, 332, 145, 163))
-    arrow(d, (x + 172, 415), (x + 203, 415), TEAL)
-    image_box(canvas, SOURCE / "paper-anatomy.png", (x + 210, 306, 159, 230))
-    text(d, (x + 20, 615), "Matched image and label projections", 23, MUTED)
-    text(d, (x + 20, 650), "Quality-controlled label availability", 23, MUTED)
+    image_box(canvas, SOURCE / "paper-ct.png", (x + 20, 302, 157, 157), "white")
+    arrow(d, (x + 183, 380), (x + 207, 380), TEAL)
+    image_box(canvas, SOURCE / "paper-anatomy.png", (x + 215, 302, 157, 157), "white")
+    text(d, (x + 20, 539), "Matched image and label projections", 23, MUTED)
+    text(d, (x + 20, 571), "Quality-controlled label availability", 23, MUTED)
 
     x = xs[1]
     examples = [ROOT / "examples/inputs/pa/t_10955_a_1.png",
@@ -221,37 +225,37 @@ def build_overview():
                 ROOT / "examples/inputs/la/train_743_a_1.png"]
     for i, path in enumerate(examples):
         xx = x + 18 + i * 121
-        image_box(canvas, path, (xx, 337, 114, 158), "#111821")
-        text(d, (xx + 57, 511), ["PA", "Oblique", "Lateral"][i], 20, MUTED, anchor="mt")
-    text(d, (x + 20, 615), "Attenuation · geometry · appearance", 23, MUTED)
-    text(d, (x + 20, 650), "Synthetic radiographs with labels", 23, MUTED)
+        image_box(canvas, path, (xx, 323, 114, 114), BACKGROUND)
+        text(d, (xx + 57, 451), ["PA", "Oblique", "Lateral"][i], 20, MUTED, anchor="mt")
+    text(d, (x + 20, 539), "Attenuation · geometry · appearance", 23, MUTED)
+    text(d, (x + 20, 571), "Synthetic radiographs with labels", 23, MUTED)
 
     x = xs[2]
     # A compact conceptual U-Net follows the manuscript's model diagram.
     heights = [92, 68, 45, 28, 45, 68, 92]
     for i, h in enumerate(heights):
         xx = x + 61 + i * 39
-        yy = 386 - h // 2
-        d.rounded_rectangle((xx, yy, xx + 27, yy + h), 4, fill="#b7a0da", outline=PURPLE, width=2)
+        yy = 350 - h // 2
+        d.rounded_rectangle((xx, yy, xx + 27, yy + h), 3, fill="#8e80c6", outline=PURPLE, width=2)
         if i < 6:
-            d.line((xx + 28, 386, xx + 38, 386), fill=PURPLE, width=2)
-    text(d, (x + 196, 444), "Available-label supervision", 24, INK, anchor="mt")
-    d.rounded_rectangle((x + 41, 487, x + 352, 535), 9, fill="#eee7f8", outline="#d9caee", width=2)
-    text(d, (x + 196, 511), "Conditional joint regularization", 21, PURPLE, True, "mm")
-    arrow(d, (x + 196, 478), (x + 196, 487), PURPLE, 2)
-    text(d, (x + 20, 615), "Learn with incomplete annotations", 23, MUTED)
-    text(d, (x + 20, 650), "Regularize the joint representation", 23, MUTED)
+            d.line((xx + 28, 350, xx + 38, 350), fill=PURPLE, width=2)
+    text(d, (x + 196, 407), "Available-label supervision", 24, INK, anchor="mt")
+    d.rectangle((x + 20, 444, x + 372, 480), fill="#31466f", outline="#7768ac", width=1)
+    text(d, (x + 196, 462), "Conditional joint regularization", 21, INK, True, "mm")
+    arrow(d, (x + 196, 435), (x + 196, 444), PURPLE, 2)
+    text(d, (x + 20, 539), "Learn with incomplete annotations", 23, MUTED)
+    text(d, (x + 20, 571), "Regularize the joint representation", 23, MUTED)
 
     x = xs[3]
-    image_box(canvas, SOURCE / "real-pa-input.png", (x + 20, 319, 157, 211), "#111821")
-    arrow(d, (x + 182, 421), (x + 207, 421), PINK)
-    image_box(canvas, SOURCE / "real-pa-lungs.png", (x + 215, 319, 157, 211), "#111821")
-    text(d, (x + 20, 615), "54 overlapping anatomy channels", 23, MUTED)
-    text(d, (x + 20, 650), "Lungs · ribs · vertebrae · heart", 23, MUTED)
-    d.line((54, 735, 1746, 735), fill=LINE, width=2)
-    text(d, (54, 753), "SYNTHETIC TRAINING", 20, TEAL, True)
-    text(d, (900, 753), "PA · LATERAL · OBLIQUE PROFILES", 20, MUTED, anchor="mt")
-    text(d, (1746, 753), "REAL-CXR ILLUSTRATION", 20, PINK, True, "rt")
+    image_box(canvas, SOURCE / "real-pa-input.png", (x + 20, 302, 157, 157), BACKGROUND)
+    arrow(d, (x + 183, 380), (x + 207, 380), PINK)
+    image_box(canvas, SOURCE / "real-pa-lungs.png", (x + 215, 302, 157, 157), BACKGROUND)
+    text(d, (x + 20, 539), "54 overlapping anatomy channels", 23, MUTED)
+    text(d, (x + 20, 571), "Lungs · ribs · vertebrae · heart", 23, MUTED)
+    d.line((54, 636, 1746, 636), fill=LINE, width=1)
+    text(d, (54, 653), "SYNTHETIC TRAINING", 20, TEAL, True)
+    text(d, (900, 653), "PA · LATERAL · OBLIQUE PROFILES", 20, MUTED, anchor="mt")
+    text(d, (1746, 653), "REAL-CXR ILLUSTRATION", 20, PINK, True, "rt")
     canvas.save(ASSETS / "anycxr-overview.png", optimize=True)
 
 
@@ -289,13 +293,14 @@ def build_real_gallery():
             path = SOURCE / f"{prefix}-{view}-{group}.png"
             with Image.open(path) as original:
                 panel, crop_box = trim_padding(original.convert("RGB"))
-            height = round(panel.height * column_width / panel.width)
-            panel = panel.resize((column_width, height), Image.Resampling.LANCZOS)
+            scale = column_width / max(panel.size)
+            panel = panel.resize((round(panel.width * scale), round(panel.height * scale)),
+                                 Image.Resampling.LANCZOS)
             panels.append((panel, path, crop_box))
-        rows.append((view, label, panels, max(p[0].height for p in panels)))
+        rows.append((view, label, panels, column_width))
 
     height = header_height + sum(row[3] for row in rows) + row_gap * 2 + margin
-    canvas = Image.new("RGB", (width, height), "#ffffff")
+    canvas = Image.new("RGB", (width, height), BACKGROUND)
     d = ImageDraw.Draw(canvas)
     headers = ["Real CXR", "Lungs", "Ribs & bones", "Vertebrae", "Heart & vessels"]
     for x, title in zip(xs, headers):
@@ -307,22 +312,27 @@ def build_real_gallery():
         bounds = label_font.getbbox(label)
         label_image = Image.new("RGBA", (bounds[2] - bounds[0] + 4, bounds[3] - bounds[1] + 4))
         ImageDraw.Draw(label_image).text((2 - bounds[0], 2 - bounds[1]), label,
-                                       font=label_font, fill="#536176")
+                                       font=label_font, fill=INK)
         label_image = label_image.transpose(Image.Transpose.ROTATE_90)
         canvas.paste(label_image, (margin + (label_width - label_image.width) // 2,
                                   y + (row_height - label_image.height) // 2), label_image)
         for x, group, (panel, path, crop_box) in zip(xs, groups, panels):
+            d.rectangle((x, y, x + column_width - 1, y + column_width - 1), fill=SURFACE)
+            panel_x = x + (column_width - panel.width) // 2
             panel_y = y + (row_height - panel.height) // 2
-            canvas.paste(panel, (x, panel_y))
+            canvas.paste(panel, (panel_x, panel_y))
             layout.append({"view": view, "group": group, "source": str(path.relative_to(ROOT)),
                            "source_crop_xyxy": list(crop_box),
-                           "display_xywh": [x, panel_y, panel.width, panel.height],
+                           "tile_xywh": [x, y, column_width, column_width],
+                           "display_xywh": [panel_x, panel_y, panel.width, panel.height],
                            "annotation_type": "input" if group == "input" else
                            ("model_prediction" if view == "oblique" else "physician_refined")})
         y += row_height + row_gap
     canvas.save(ASSETS / "anycxr-real-anatomy.png", optimize=True)
     (ASSETS / "gallery-layout.json").write_text(json.dumps({"size": list(canvas.size),
-        "column_gap": gap, "row_gap": row_gap, "panels": layout}, indent=2) + "\n")
+        "background": BACKGROUND, "tile_background": SURFACE, "text_color": INK,
+        "tile_size": column_width, "column_gap": gap, "row_gap": row_gap,
+        "panels": layout}, indent=2) + "\n")
 
 
 def display_name(name):
