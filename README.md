@@ -13,6 +13,7 @@
 <p align="center">
   <a href="https://arxiv.org/abs/2512.17263"><img src="https://img.shields.io/badge/arXiv-2512.17263-b31b1b?style=flat-square" alt="AnyCXR paper on arXiv"></a>
   <a href="https://huggingface.co/agaresd/anychest"><img src="https://img.shields.io/badge/🤗_Hugging_Face-Model_weights-7752a4?style=flat-square" alt="Hugging Face model weights"></a>
+  <a href="https://huggingface.co/datasets/agaresd/anycxr-drr"><img src="https://img.shields.io/badge/🤗_Hugging_Face-DRR_training_data-7752a4?style=flat-square" alt="AnyCXR DRR training data"></a>
   <a href="#installation"><img src="https://img.shields.io/badge/Get_started-Installation-336c91?style=flat-square" alt="Installation"></a>
   <a href="#quick-start"><img src="https://img.shields.io/badge/CLI-Quick_start-336c91?style=flat-square" alt="CLI quick start"></a>
   <a href="#anatomical-structures"><img src="https://img.shields.io/badge/Anatomy-54_structures-7752a4?style=flat-square" alt="54 anatomical structures"></a>
@@ -26,7 +27,7 @@
 
 This repository provides the AnyCXR inference package, pretrained model weights, example inputs and outputs, Docker support, evaluation tools, and [training documentation](training/README.md).
 
-[Installation](#installation) · [Quick start](#quick-start) · [Model weights](#model-weights) · [Structures](#anatomical-structures) · [Method](#method) · [Training](#training) · [Evaluation](#evaluation) · [Citation](#citation)
+[Installation](#installation) · [Quick start](#quick-start) · [Model weights](#model-weights) · [Structures](#anatomical-structures) · [Method](#method) · [Training](#training) · [Training data](#training-data) · [Evaluation](#evaluation) · [Citation](#citation)
 
 ## Anatomy on real chest X-rays
 
@@ -254,6 +255,18 @@ Install the optional training dependencies with:
 ```bash
 python -m pip install -e '.[train,frontal]'
 ```
+
+## Training data
+
+Our publicly released, self-generated **[AnyCXR DRR training data](https://huggingface.co/datasets/agaresd/anycxr-drr)** contains **1,136,340 synthetic radiographs** across AP, PA, lateral and 45° oblique views, with **54-channel anatomical supervision**. The release also includes 20,711 original-resolution synthetic images with available masks and prepared frontal/lateral/oblique training caches. These components overlap and should not be added as independent patient counts.
+
+The complete download is approximately **85.9 GB**, including losslessly compressed arrays, metadata, checksums and an unpacking helper. See the dataset card for array conventions and usage, and its license for terms and attribution.
+
+```bash
+hf download agaresd/anycxr-drr --repo-type dataset --local-dir ./anycxr-drr
+```
+
+Accept the dataset's access conditions on Hugging Face and log in before downloading.
 
 ## Evaluation
 
